@@ -1,0 +1,9 @@
+include chatBodyHeader
+include chatBodySender
+include chatBodyMessages
+
+mixin chatBody()
+    .chat-body
+        +chatBodyHeader()
+        +chatBodyMessages()
+        +chatBodySender()

@@ -1,0 +1,44 @@
+.form-input{
+    width: 100%;
+}
+
+.form-input__label__wrapper{
+
+}
+
+.form-input-label{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 9px;
+    line-height: 9px;
+
+    color: #999999;
+}
+
+.form-input-label__input-wrapper{
+
+}
+
+.form-input__input{
+    width: 100%;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 13px;
+    color: #1E1E1E;
+    border: none;
+    border-bottom: 1px solid #3369F3;
+}
+
+.form-input-error{
+    margin-top: 5px;
+    height: 20px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 8px;
+    line-height: 8px;
+}
+
+.form-input_error-color{
+    color: #FF2F2F;
+}

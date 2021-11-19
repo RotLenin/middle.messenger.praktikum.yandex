@@ -1,0 +1,12 @@
+mixin chatBodySender()
+    -
+        attachmentImg = "../../static/img/attachment.png"
+        senderImg = "../../static/img/sender.png"
+
+    .chat-body-sender
+        .chat-body-sender__attachment
+            img(src='../static/img/attachment.png', alt='alt')
+        .chat-body-sender__message
+            p= 'Сообщение'
+        .chat-body-sender__send
+            img(src='../static/img/send.png', alt='alt')

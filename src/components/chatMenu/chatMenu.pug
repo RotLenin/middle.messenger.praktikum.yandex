@@ -1,0 +1,10 @@
+include ../searchFilter/searchFilter
+
+mixin chatMenu()
+    .chat-menu
+        .chat-menu__header
+            a(href='profile.pug').chat-menu__profile-link= "Профиль >"
+        .chat-menu__filter
+            +searchFilter
+        .chat-menu__list
+            p= 'Сообщения'

@@ -1,0 +1,31 @@
+extends ../template/form/form
+
+include ../components/acceptBtn/acceptBtn
+include ../components/defaultLink/defaultLink
+include ../components/formInput/formInput
+
+block title
+    title Войти
+
+block css
+    include ../components/acceptBtn/acceptBtn.css
+    include ../components/defaultLink/defaultLink.css
+    include ../components/formInput/formInput.css
+
+block formTitle
+    span= 'Войти'
+
+block inputs
+    +formInput('login', 'Логин', 'Логин', 'text', "Некоректный логин")
+    +formInput('password', 'Пароль', 'Пароль', 'password', "Некоректный пароль")
+
+block buttons
+    .form-action__wrapper
+        +button("Авторизоваться")
+    .form-action__wrapper
+        +defaultLink("Нет аккаунта?", 'singin.pug')
+    .form-action__wrapper
+        .form-action__error.form-input_error-color= ''
+
+block scripts
+    script(type="module", src="../handlers/loginFormHandler.js")

@@ -1,0 +1,3 @@
+.chat-body-messages{
+    height: calc(100% - 128px);
+}

@@ -1,0 +1,8 @@
+include ../dotMenu/dotMenu
+
+mixin chatBodyHeader()
+    .chat-body-header
+        .chat-body-header__profile
+            p= 'Тут будет пользователь'
+        .chat-body-header__options
+            +dotMenu()

@@ -1,0 +1,7 @@
+mixin formInput(name, label, placeholder, type, errorText)
+    div.form-input
+        .form-input__label__wrapper
+            label.form-input-label= label
+        .form-input-label__input-wrapper
+            input(name=name type=type placeholder=placeholder).form-input__input
+        .form-input-error(name=name data-error=errorText).form-input_error-color= ''

@@ -1,0 +1,8 @@
+.chat-body-header{
+    box-sizing: border-box;
+    padding: 15px;
+    height: 62px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}

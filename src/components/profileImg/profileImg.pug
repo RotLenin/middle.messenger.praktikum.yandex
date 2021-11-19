@@ -1,0 +1,27 @@
+include ../modal/modal
+include ../acceptBtn/acceptBtn
+include ../customFileUploader/customFileUploader
+
+mixin profileImg(name)
+    .profile-img
+        .profile-img__wrapper
+            .profile-img__img-wrapper
+                img.profile-img__img
+                .profile-img__change-img-wrapper
+                    span.profile-img__change-img= 'Поменять аватар'
+            .profile-img__name-wrapper
+                p.profile-img__name= name
+        +modal
+            .profile-img-modal
+                .profile-img-modal__title-wrapper
+                    .profile-img-modal__title= 'Загрузить файл'
+                .profile-img-modal__file-wrapper
+                    +customFileUploader('profileImg')
+                .profile-img-modal__action-wrapper
+                    +button('Примернить')
+                    .profile-img-modal__action-error
+
+    style
+        include ../acceptBtn/acceptBtn.css
+    script(type="module", src="../handlers/profileImgHandler.js")
+

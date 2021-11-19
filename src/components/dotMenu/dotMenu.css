@@ -1,0 +1,7 @@
+.dot-menu{
+    width: 32px;
+    height: 32px;
+
+    background-image: radial-gradient(circle, black 3px, transparent 4px);
+    background-size: 100% 33.33%;
+}

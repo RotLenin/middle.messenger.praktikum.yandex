@@ -1,0 +1,18 @@
+include ../../modules/head
+include ../../components/defaultLink/defaultLink
+
+html
+    head
+        +head
+        style
+            include error.css
+        block head
+    body
+        .content
+            .error
+                .error_number
+                    block error
+                .error_user-info
+                    block info
+                .error_home-link
+                    +defaultLink('Назад к чатам', 'chat.pug')

@@ -1,0 +1,42 @@
+extends ../template/profile/profile
+
+include ../components/profileImg/profileImg
+include ../components/defaultLink/defaultLink
+
+block styles
+    style
+        include ../components/profileImg/profileImg.css
+        include ../components/defaultLink/defaultLink.css
+
+block profileBody
+    +profileImg('Имя')
+    .profile__info
+        .profile__field
+            .profile_main-text= 'Почта'
+            .profile_second-text= 'pochta@yandex.ru'
+        .profile__field
+            .profile_main-text= 'Логин'
+            .profile_second-text= 'ivanivanov'
+        .profile__field
+            .profile_main-text= 'Имя'
+            .profile_second-text= 'Иван'
+        .profile__field
+            .profile_main-text= 'Фамилия'
+            .profile_second-text= 'Иванов'
+        .profile__field
+            .profile_main-text= 'Имя в чате'
+            .profile_second-text= 'Иван'
+        .profile__field
+            .profile_main-text= 'Телефон'
+            .profile_second-text= '+7 (909) 967 30 30'
+    .profile-actions
+        .profile__field
+            +defaultLink('Изменить данные', 'profileChangeInfo.pug')
+        .profile__field
+            +defaultLink('Изменить пароль', 'profileChangePassword.pug')
+        .profile__field
+            a(href="login.pug").profile_danger-text='Выйти'
+
+
+block scripts
+    script
