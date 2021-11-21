@@ -10,9 +10,6 @@ app.use(express.static('dist'));
 app.get('/', function(req, res) {
     res.status(200).sendFile(path.resolve(__dirname, 'dist', 'login.html'));
 });
-app.get('/index.html', function(req, res) {
-    res.status(200).sendFile(path.resolve(__dirname, 'dist', 'login.html'));
-});
 
 //404
 app.use(function(req,res){
