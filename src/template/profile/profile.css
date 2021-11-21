@@ -35,9 +35,15 @@
 .profile__field{
     display: flex;
     justify-content: space-between;
+    box-sizing: border-box;
+    height: 31px;
     padding: 6px 0;
-
     border-bottom: 1px solid #EAEAEA;
+}
+
+.profile__field div{
+    display: flex;
+    align-items: center;
 }
 
 .profile__field:last-child{

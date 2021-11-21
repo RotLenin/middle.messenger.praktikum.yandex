@@ -1,0 +1,6 @@
+mixin profileInput(item)
+    div.profile-input.bd-bottom
+        .profile-input__label__wrapper
+            label.profile-input-label.text_main= item.label
+        .profile-input-label__input-wrapper
+            input(name=item.name type=item.type value=item.value).profile-input__input.text_second
