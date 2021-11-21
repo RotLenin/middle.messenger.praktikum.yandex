@@ -43,29 +43,3 @@
 .profile__field:last-child{
     border: none;
 }
-
-
-
-.profile_main-text{
-    font-style: normal;
-    font-weight: 500;
-    font-size: 13px;
-    line-height: 13px;
-    color: #1E1E1E;
-}
-
-.profile_second-text{;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 13px;
-    line-height: 13px;
-    color: #999999;
-}
-
-.profile_danger-text{
-    font-style: normal;
-    font-weight: 500;
-    font-size: 13px;
-    line-height: 13px;
-    color: #FF0000;
-}

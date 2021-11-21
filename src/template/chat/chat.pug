@@ -1,23 +1,17 @@
 extends ../default
 
 include ../../components/chatMenu/chatMenu
-include ../../components/chatBody/chatBody
 
 block head
-    block pageHead
     style
         include chat.css
         include ../../components/chatMenu/chatMenu.css
         include ../../components/searchFilter/searchFilter.css
-        include ../../components/chatBody/chatBody.css
-        include ../../components/chatBody/chatBodyHeader.css
-        include ../../components/dotMenu/dotMenu.css
-        include ../../components/chatBody/chatBodyMessages.css
-        include ../../components/chatBody/chatBodySender.css
+    block style
 
 block content
     .chat
-        block content
         +chatMenu()
-        +chatBody()
+        block body
+
 

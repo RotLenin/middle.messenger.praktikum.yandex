@@ -1,12 +1,17 @@
-mixin chatBodySender()
-    -
-        attachmentImg = "../../static/img/attachment.png"
-        senderImg = "../../static/img/sender.png"
+include ../dropDownMenu/dropDownMenu
+include ../attachmentMenu/attachmentMenu
+include ../sendInput/sendInput
 
-    .chat-body-sender
+mixin chatBodySender()
+    -senderImg = "../../static/img/sender.png"
+
+    style
+        include chatBodySender.css
+    .chat-body-sender.bd-top
         .chat-body-sender__attachment
-            img(src='../static/img/attachment.png', alt='alt')
+            - var list = requireData('attachmentDropdown.js')
+            +attachmentMenu(list)
         .chat-body-sender__message
-            p= 'Сообщение'
+            +sendInput
         .chat-body-sender__send
             img(src='../static/img/send.png', alt='alt')

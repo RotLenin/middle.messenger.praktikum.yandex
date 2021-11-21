@@ -8,18 +8,18 @@ mixin profileImg(name)
             .profile-img__img-wrapper
                 img.profile-img__img
                 .profile-img__change-img-wrapper
-                    span.profile-img__change-img= 'Поменять аватар'
+                    span.profile-img__change-img.text_white= 'Поменять аватар'
             .profile-img__name-wrapper
-                p.profile-img__name= name
+                p.profile-img__name.text_main= name
         +modal
             .profile-img-modal
                 .profile-img-modal__title-wrapper
-                    .profile-img-modal__title= 'Загрузить файл'
+                    .profile-img-modal__title.text_main= 'Загрузить файл'
                 .profile-img-modal__file-wrapper
                     +customFileUploader('profileImg')
                 .profile-img-modal__action-wrapper
                     +button('Примернить')
-                    .profile-img-modal__action-error
+                    .profile-img-modal__action-error.text_danger
 
     style
         include ../acceptBtn/acceptBtn.css

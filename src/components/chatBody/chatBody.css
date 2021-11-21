@@ -1,15 +1,9 @@
 .chat-body{
+    box-sizing: border-box;
+    padding: 10px 15px 10px;
     width: 70%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-}
-
-.chat-body__message{
-
-}
-
-.chat-body__sender{
-    height: 32px;
 }

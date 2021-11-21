@@ -1,4 +1,8 @@
 extends ../template/chat/chat
 
-block pageHead
-    title Чат
+block variables
+    -
+        var title = 'чат'
+
+block body
+    .chat__clear.text_second= "Выберите чат чтобы отправить сообщение"

@@ -1,10 +1,14 @@
 extends ../template/error/error
 
-block head
+block variables
+    -
+        var title = "500"
+
+block title
     title 500
 
 block error
     span= "500"
 
 block info
-    span= "Му уже фиксим"
+    span= "Мы уже фиксим =)"

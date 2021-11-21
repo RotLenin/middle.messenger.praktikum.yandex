@@ -1,10 +1,15 @@
 include ../searchFilter/searchFilter
+include chatMenuItem
 
 mixin chatMenu()
+    style
+        include chatMenuItem.css
     .chat-menu
         .chat-menu__header
-            a(href='profile.pug').chat-menu__profile-link= "Профиль >"
+            a(href='profile.pug').chat-menu__profile-link.text_second.no_decoration= "Профиль >"
         .chat-menu__filter
             +searchFilter
         .chat-menu__list
-            p= 'Сообщения'
+            - var chatList = requireData('chats.js');
+            each item in chatList
+                +chatMenuItem(item)

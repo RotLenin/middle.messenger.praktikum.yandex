@@ -52,12 +52,7 @@
 
 .profile-img__change-img{
     width: 80px;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 14px;
     text-align: center;
-    color: #FFFFFF;
 }
 
 .profile-img__name{
@@ -99,5 +94,4 @@
 .profile-img-modal__action-error{
     margin: 10px 0;
     text-align: center;
-    color: #FF2F2F;
 }

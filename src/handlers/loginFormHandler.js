@@ -9,7 +9,6 @@ function auth(){
     let inputs = form.querySelectorAll('input')
     let {errors, data} = validationForm(inputs);
     // Если ошибок при валидации нет - проводим авторизацию (пока со статикой)
-    console.log(errors, data);
     if(errors.length === 0){
         let user = USERS.find(user => user.login === data.login && user.password === data.password);
         if(user){
@@ -18,7 +17,6 @@ function auth(){
             return true;
         }
         /** TODO: сделать функционал на очистку ошибки при изменении полей формы */
-        console.log('Bad data user');
         form.querySelector('.form-action__error').innerHTML = 'Неверный Логин или Пароль'
         return false
     }

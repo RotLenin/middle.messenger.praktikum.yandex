@@ -4,8 +4,9 @@ include ../components/acceptBtn/acceptBtn
 include ../components/defaultLink/defaultLink
 include ../components/formInput/formInput
 
-block title
-    title Войти
+block variables
+    -
+        var title = "Вход"
 
 block css
     include ../components/acceptBtn/acceptBtn.css
@@ -13,19 +14,20 @@ block css
     include ../components/formInput/formInput.css
 
 block formTitle
-    span= 'Войти'
+    span.text_main.form-title= 'Войти'
 
 block inputs
-    +formInput('login', 'Логин', 'Логин', 'text', "Некоректный логин")
-    +formInput('password', 'Пароль', 'Пароль', 'password', "Некоректный пароль")
+    - var login = requireData('login.js')
+    each item in login.inputs
+        +formInput(item.name, item.label, item.placeholder, item.type, item.errorText)
 
 block buttons
     .form-action__wrapper
-        +button("Авторизоваться")
+        +button("Вход")
     .form-action__wrapper
-        +defaultLink("Нет аккаунта?", 'singin.pug')
+        +defaultLink("Нет аккаунта?", 'signup.pug')
     .form-action__wrapper
-        .form-action__error.form-input_error-color= ''
+        .form-action__error.text_danger= ''
 
 block scripts
     script(type="module", src="../handlers/loginFormHandler.js")

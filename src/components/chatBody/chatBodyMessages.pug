@@ -1,3 +1,14 @@
-mixin chatBodyMessages()
+include chatBodyMessage
+
+mixin chatBodyMessages(messages)
+    style
+        include chatBodyMessages.css
     .chat-body-messages
-        p= "сдесь будем динамически заполнять =)"
+        .chat-body-messages__wrapper
+            for item in messages
+                if item.author === true
+                    .chat-body-message.chat-body-message_right
+                        +chatBodyMessage(item)
+                else
+                    .chat-body-message.chat-body-message_left
+                        +chatBodyMessage(item)

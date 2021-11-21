@@ -1,18 +1,18 @@
+extends ../default
+
 include ../../modules/head
 include ../../components/defaultLink/defaultLink
 
-html
-    head
-        +head
-        style
-            include error.css
-        block head
-    body
-        .content
-            .error
-                .error_number
-                    block error
-                .error_user-info
-                    block info
-                .error_home-link
-                    +defaultLink('Назад к чатам', 'chat.pug')
+block head
+    style
+        include error.css
+    block title
+
+block content
+    .error
+        .error_number.text_main
+            block error
+        .error_user-info.text_main
+            block info
+        .error_home-link
+            +defaultLink('Назад к чатам', 'chat.pug')

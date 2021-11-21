@@ -1,0 +1,9 @@
+mixin chatBodyMessage(message)
+    .chat-body-message__wrapper
+        case message.type
+            when 'img'
+                img(src=message.src).chat-body-message__img
+            when 'text'
+            default
+                .chat-body-message__text.text_main= message.message
+        .chat-body-message__time.text_second= message.time

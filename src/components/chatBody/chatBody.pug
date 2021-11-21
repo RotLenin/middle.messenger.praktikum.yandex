@@ -2,8 +2,10 @@ include chatBodyHeader
 include chatBodySender
 include chatBodyMessages
 
-mixin chatBody()
+mixin chatBody(chat, messages)
+    style
+        include chatBody.css
     .chat-body
-        +chatBodyHeader()
-        +chatBodyMessages()
+        +chatBodyHeader(chat)
+        +chatBodyMessages(messages)
         +chatBodySender()

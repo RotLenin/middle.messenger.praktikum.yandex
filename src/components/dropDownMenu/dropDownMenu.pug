@@ -1,0 +1,9 @@
+mixin dropDownMenu(list)
+    style
+        include dropDownMenu.css
+    .drop-down-menu.bg_main&attributes(attributes)
+        each item in list
+            .drop-down-menu__item
+                img(src=item.icon).drop-down-menu__item-icon
+                .drop-down-menu__item-name.text_main= item.name
+

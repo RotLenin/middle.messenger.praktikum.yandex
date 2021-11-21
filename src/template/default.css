@@ -1,4 +1,79 @@
-.content{
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    src: local('Inter'), url('../static/font/Inter/Inter-Medium.ttf') format('truetype');
+}
+
+textarea, input { outline: none; }
+
+body{
+    margin: 0;
+    padding: 0;
+}
+
+
+.container{
     width: 100vw;
     height: 100vh;
+}
+
+.text_main,
+.text_second,
+.text_info,
+.text_danger,
+.text_white{
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 13px;
+}
+
+.bg_main{
+    background-color: #fff;
+}
+
+.bg_second{
+    background-color: #FBFBFB;
+}
+
+.bg_bright{
+    background-color: #EFEFEF;
+}
+
+.text_main{
+    color: #1E1E1E;
+}
+
+.text_second{
+    color: #999999;
+}
+
+.text_white{
+    color: #FFFFFF;
+}
+
+.text_info{
+    color: #3369F3;
+}
+
+.text_danger{
+    color: #FF0000;
+}
+
+.bd-top{
+    border-top: 1px solid #EAEAEA;
+}
+
+.bd-bottom{
+    border-bottom: 1px solid #EAEAEA;
+}
+
+.no_decoration{
+    text-decoration: none;
+}
+
+.hidden{
+    display: none !important;
 }
