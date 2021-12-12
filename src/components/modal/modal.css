@@ -1,0 +1,23 @@
+.modal{
+    position: absolute;
+    top:0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: rgba(0, 0, 0, .5);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 8000;
+}
+
+.modal_not_show{
+    display: none;
+}
+
+.modal__wrapper{
+    min-width: 320px;
+    max-width: 640px;
+}

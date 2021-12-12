@@ -1,0 +1,31 @@
+extends ../template/form/form
+
+include ../components/acceptBtn/acceptBtn
+include ../components/defaultLink/defaultLink
+include ../components/formInput/formInput
+
+block variables
+    -
+        var title = "Регистрация"
+
+block css
+    include ../components/acceptBtn/acceptBtn.css
+    include ../components/defaultLink/defaultLink.css
+    include ../components/formInput/formInput.css
+
+block formTitle
+    span.text_main.form-title= 'Регистрация'
+
+block inputs
+    - var singup = requireData('signup.js')
+    each item in singup.inputs
+        +formInput(item.name, item.label, item.placeholder, item.type, item.errorText)
+
+block buttons
+    .form-action__wrapper
+        +button("Зарегистрироваться")
+    .form-action__wrapper
+        +defaultLink("Войти", "login.pug")
+
+block scripts
+    script(type="module", src="../handlers/loginFormHandler.js")

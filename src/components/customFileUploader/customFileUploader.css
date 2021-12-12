@@ -1,0 +1,11 @@
+input[type="file"] {
+    display: none;
+}
+.custom-file-uploader{
+    text-decoration-line: underline;
+    text-align: center;
+}
+
+.custom-file-uploader_done{
+    color: #8D8D8D;
+}

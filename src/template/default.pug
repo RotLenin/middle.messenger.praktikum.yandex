@@ -1,0 +1,16 @@
+include ../modules/head
+include ../modules/favicon
+
+block variables
+
+html
+    head
+        title "Мой чат - #{title}"
+        style
+            include default.css
+        +head
+        +favicon
+        block head
+    body
+        .container
+            block content

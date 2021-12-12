@@ -1,0 +1,33 @@
+extends ../template/profile/profile
+
+include ../components/profileImg/profileImg
+include ../components/defaultLink/defaultLink
+
+block variables
+    -
+        var title = "Профиль"
+
+block styles
+    style
+        include ../components/profileImg/profileImg.css
+        include ../components/defaultLink/defaultLink.css
+
+block profileBody
+    +profileImg('Имя')
+    .profile__info
+        - var profile = requireData('profile.js')
+        each item in profile.profile
+            .profile__field
+                .text_main= item.name
+                .text_second= item.value
+    .profile-actions
+        .profile__field
+            +defaultLink('Изменить данные', 'profileChangeInfo.pug')
+        .profile__field
+            +defaultLink('Изменить пароль', 'profileChangePassword.pug')
+        .profile__field
+            a(href="login.pug").text_danger.no_decoration='Выйти'
+
+
+block scripts
+    script

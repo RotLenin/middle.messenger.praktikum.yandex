@@ -1,0 +1,30 @@
+.drop-down-menu{
+    position: absolute;
+    z-index: 2000;
+
+    box-sizing: border-box;
+    padding: 10px;
+
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
+    border-radius: 12px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.drop-down-menu__item{
+    display: flex;
+    justify-content: flex-start;
+    margin: 10px 0;
+}
+
+.drop-down-menu__item-icon{
+    width: 22px;
+    height: 22px;
+    margin-right: 15px;
+}
+
+.drop-down-menu__item-name{
+    display: flex;
+    align-items: center;
+}
