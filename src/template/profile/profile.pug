@@ -1,17 +1,7 @@
-extends ../default
-
 include ../../components/backBlock/backBlock
 
-block head
-    style
-        include profile.css
-        include ../../components/backBlock/backBlock.css
-    block styles
-
-block content
-    .profile
-        +backBlock()
-        .profile__wrapper
-            .profile__body
-                block profileBody
-    block scripts
+.profile
+    +backBlock()
+    .profile__wrapper
+        .profile__body
+            block profileBody

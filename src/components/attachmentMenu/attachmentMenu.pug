@@ -1,8 +1,4 @@
 mixin attachmentMenu(list)
     .attachment-menu
-        style
-            include attachmentMenu.css
-        - var attachmentImg = "../static/img/attachment.png"
         img(src=attachmentImg, alt='alt')
         +dropDownMenu(list)(class='chat-body-sender__attachment-dropdown hidden')
-        script(type="module", src="../handlers/attachmentHandler.js")
