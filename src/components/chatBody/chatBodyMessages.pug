@@ -1,0 +1,14 @@
+include chatBodyMessage
+
+mixin chatBodyMessages(messages)
+    style
+        include chatBodyMessages.css
+    .chat-body-messages
+        .chat-body-messages__wrapper
+            for item in messages
+                if item.author === true
+                    .chat-body-message.chat-body-message_right
+                        +chatBodyMessage(item)
+                else
+                    .chat-body-message.chat-body-message_left
+                        +chatBodyMessage(item)

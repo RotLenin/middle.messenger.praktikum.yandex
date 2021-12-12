@@ -1,0 +1,17 @@
+include ../dropDownMenu/dropDownMenu
+include ../attachmentMenu/attachmentMenu
+include ../sendInput/sendInput
+
+mixin chatBodySender()
+    -senderImg = "../../static/img/sender.png"
+
+    style
+        include chatBodySender.css
+    .chat-body-sender.bd-top
+        .chat-body-sender__attachment
+            - var list = requireData('attachmentDropdown.js')
+            +attachmentMenu(list)
+        .chat-body-sender__message
+            +sendInput
+        .chat-body-sender__send
+            img(src='../static/img/send.png', alt='alt')

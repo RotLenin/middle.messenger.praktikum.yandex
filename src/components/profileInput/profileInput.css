@@ -1,0 +1,36 @@
+.profile-input{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.profile-input__label__wrapper{
+    width: 50%;
+    display: flex;
+    align-items: center;
+}
+
+.profile-input-label {
+
+}
+
+.profile-input-label__input-wrapper{
+    width: 50%;
+}
+
+.profile-input__input{
+    width: 100%;
+    border:none;
+    background-image:none;
+    box-sizing: border-box;
+
+    text-align: right;
+}
+
+.profile-input__input:last-child{
+    border: none;
+}
