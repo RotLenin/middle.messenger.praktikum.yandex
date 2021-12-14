@@ -15,11 +15,11 @@ export function manageDropdown(dropDown : HTMLElement) {
    */
   function toggle(event : Event) {
     if (dropDown.classList.contains('hidden')) {
-      if(body){
+      if (body) {
         body.addEventListener('click', toggle);
       }
     } else {
-      if(body){
+      if (body) {
         body.removeEventListener('click', toggle);
       }
     }

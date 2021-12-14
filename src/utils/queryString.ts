@@ -3,9 +3,7 @@
  * @param {object} data
  * @return {string} - преобразованная get строка
  */
-import Iobject from "../types/interface/Iobject";
-
-export function queryStringify(data : Iobject) {
+export function queryStringify(data : Record<string, any>) {
   const str = [];
   for (const key in data) {
     if (Object.prototype.hasOwnProperty.call(data, key)) {

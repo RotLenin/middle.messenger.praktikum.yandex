@@ -3,9 +3,9 @@ import DefaultController from './DefaultController';
 import FormTemplate from '../view/Form';
 import StaticModel from '../model/StaticModel';
 
-import * as ROUTES from '../../constants/routes';
+import Ivalidate from "../../types/interface/Ivalidate";
 
-import {validationForm} from '../../utils/inputValidation';
+import * as ROUTES from '../../constants/routes';
 
 export enum AUTH_METHODS {
   LOGIN = 'login',
@@ -16,16 +16,16 @@ export enum AUTH_METHODS {
  * Контролер для Логина/Авторизации, так как они фактически отличаются
  * только парой входных параметров */
 export default class Auth extends DefaultController {
-  private _form: any;
+  // @ts-ignore
+  private _form: HTMLElement;
   private static instance: Auth;
+  public _template = FormTemplate;
 
   /**
    *
    */
   constructor() {
     super();
-    this._template = FormTemplate;
-
     /** Привязываем context */
     this._authAction = this._authAction.bind(this);
     this._signupAction = this._signupAction.bind(this);
@@ -45,75 +45,114 @@ export default class Auth extends DefaultController {
   /** login
    * Получаем данные для шаблона auth, выставляем обработчики
    */
-  login() {
-    StaticModel.getLoginLocals()
-        .then((res) => res.default)
-        .then((locals) => this._renderTemplate(locals))
-        .then((form) => this._mountTemplate(form))
-        .then(() => this._setForm())
-        .then(() => this._setInputValidation(this._form))
-        .then(() => this._auth())
-        .then(() => this.initSPALinks());
+  async login() {
+    const locals = await StaticModel.getLoginLocals().then((res: Record<string, any>) => res.default);
+    const form = await this._renderTemplate(locals)
+
+    if (this._mountTemplate(form)) {
+      this._setForm()
+      this._setInputValidation(this._form)
+      this._auth()
+      this.initSPALinks()
+      return true;
+    }
+
+    throw new Error('Can\'t mount template');
   }
 
   /** signup
    * Получаем данные для шаблона auth, выставляем обработчики
    */
-  signup() {
-    StaticModel.getSignupLocals()
-        .then((res) => res.default)
-        .then((locals) => this._renderTemplate(locals))
-        .then((template) => this._mountTemplate(template))
-        .then(() => this._setForm())
-        .then(() => this._setInputValidation(this._form))
-        .then(() => this._signup())
-        .then(() => this.initSPALinks());
+  async signup() {
+    const locals = await StaticModel.getSignupLocals().then((res : Record<string, any>) => res.default);
+    const form = await this._renderTemplate(locals)
+
+    if (this._mountTemplate(form)) {
+      this._setForm()
+      this._setInputValidation(this._form)
+      this._signup()
+      this.initSPALinks()
+      return true;
+    }
+
+    throw new Error('Can\'t mount template');
   }
 
   /** _setForm
    *  Выставляем корень шаблона
+   *  @return {boolean}
+   *  @throws {string}
    */
   _setForm() {
-    this._form = document.querySelector('.form');
+    const find = document.querySelector('.form');
+    if (find instanceof HTMLElement) {
+      this._form = find;
+      return true;
+    }
+
+    throw new Error('can\'t find .form');
+  }
+
+  /** _getAcceptBtn
+   *  Ищем кнопку для действия
+   *  @return {HTMLElement}
+   *  @throws {string}
+   */
+  _getAcceptBtn() : HTMLElement {
+    const find = this._form.querySelector('.accept-btn');
+    if (find instanceof HTMLElement) {
+      return find;
+    }
+    throw new Error('can\'t find .accept-btn');
   }
 
   /** _auth
    *  Вешаем на кнопку действие при авторизации
    */
   _auth() {
-    this._form.querySelector('.accept-btn')
-        .addEventListener('click', this._authAction);
+    if (this._form instanceof HTMLElement) {
+      this._getAcceptBtn().addEventListener('click', this._authAction);
+      return true;
+    }
+    throw new Error('can\'t find .form');
   }
 
   /** _authAction
    *  Действия при авторизации
    */
   _authAction() {
-    const inputs = this._form.querySelectorAll('input');
-    // @ts-ignore
-    const {errors, data} = validationForm(inputs);
-    if (errors.length === 0) {
-      Router.getInstance().redirect(ROUTES.CHAT_ROUTE);
-    }
+    this._validate(this._form)
+      .then((res : Ivalidate) => {
+        console.log(res)
+        if(res.status){
+          Router.getInstance().redirect(ROUTES.CHAT_ROUTE);
+        }
+      })
+      .catch(err => {throw new Error(err)});
   }
 
   /** _signup
    *  Вешаем событие на кнопку
    */
   _signup() {
-    this._form.querySelector('.accept-btn')
-        .addEventListener('click', this._signupAction);
+    if (this._form instanceof HTMLElement) {
+      this._getAcceptBtn().addEventListener('click', this._signupAction);
+      return true;
+    }
+    throw new Error('can\'t find .form');
   }
 
   /** _signupAction
    *  Действия при нажатии кнопки регистрация
    */
   _signupAction() {
-    const inputs = this._form.querySelectorAll('input');
-    // @ts-ignore
-    const {errors, data} = validationForm(inputs);
-    if (errors.length === 0) {
-      Router.getInstance().redirect(ROUTES.CHAT_ROUTE);
-    }
+    this._validate(this._form)
+      .then((res : Ivalidate) => {
+        console.log(res)
+        if(res.status){
+          Router.getInstance().redirect(ROUTES.CHAT_ROUTE);
+        }
+      })
+      .catch(err => {throw new Error(err)});
   }
 }

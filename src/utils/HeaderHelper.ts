@@ -6,7 +6,7 @@ const title = document.querySelector('title');
  * @param {string} titleText - заголовок
  */
 export function setTitle(titleText: string) {
-  if(title){
+  if (title) {
     title.innerHTML = TITLE + ' - ' + titleText;
   } else {
     console.log('cant find title');

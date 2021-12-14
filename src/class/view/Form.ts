@@ -1,6 +1,5 @@
 import PageBlock from './PageBlock';
-import Iobject from "../../types/interface/Iobject";
-
+import IpageBlock from "../../types/interface/IpageBlock";
 import compileFormTemplate from '../../pages/form.pug';
 
 import '../../template/form/form.css';
@@ -15,7 +14,7 @@ class Form extends PageBlock {
   /**
    * @param {object} locals
    */
-  constructor(locals : Iobject) {
+  constructor(locals : IpageBlock) {
     locals.template = compileFormTemplate;
     super('div', locals);
   }

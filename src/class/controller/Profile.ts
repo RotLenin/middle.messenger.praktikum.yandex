@@ -3,9 +3,9 @@ import DefaultController from './DefaultController';
 import ProfileTemplate from '../view/Profile';
 import StaticModel from '../model/StaticModel';
 
-import * as ROUTES from '../../constants/routes';
+import Ivalidate from "../../types/interface/Ivalidate";
 
-import {validationForm} from '../../utils/inputValidation';
+import * as ROUTES from '../../constants/routes';
 
 export enum PROFILE_METHODS {
   PROFILE = 'profile',
@@ -18,15 +18,15 @@ export enum PROFILE_METHODS {
  */
 export default class Profile extends DefaultController {
   private static instance: Profile;
-  public _body: HTMLElement | null = null;
+  public _template = ProfileTemplate;
+  // @ts-ignore
+  private _body: Element;
 
   /** constructor
    *  Создаем экземпляр Profile
    */
   constructor() {
     super();
-    this._template = ProfileTemplate;
-
     /** Привязываем context */
     this._changeAction = this._changeAction.bind(this);
     this._passwordAction = this._passwordAction.bind(this);
@@ -46,93 +46,129 @@ export default class Profile extends DefaultController {
   /** profile
    * Получаем данные для шаблона profile, выставляем обработчики
    */
-  profile() {
-    StaticModel.getProfileLocals()
-        .then((res) => res.default.profile)
-        .then((locals) => this._renderTemplate(locals))
-        .then((render) => this._mountTemplate(render))
-        .then(() => this.initSPALinks());
+  async profile() {
+    const locals = await StaticModel.getProfileLocals().then((res : Record<string, any>) => res.default.profile)
+    const profile = await this._renderTemplate(locals)
+
+    if (this._mountTemplate(profile)) {
+      this.initSPALinks();
+      return true;
+    }
+
+    throw new Error('Can\'t mount template');
   }
 
   /** password
    * Получаем данные для шаблона profile, выставляем обработчики
    */
-  password() {
-    StaticModel.getProfileLocals()
-        .then((res) => res.default.password)
-        .then((locals) => this._renderTemplate(locals))
-        .then((render) => this._mountTemplate(render))
-        .then(() => this._setBody())
-      // @ts-ignore
-        .then(() => this._setInputValidation(this._body))
-        .then(() => this._setPasswordAction())
-        .then(() => this.initSPALinks());
+  async password() {
+    const locals = await StaticModel.getProfileLocals().then((res : Record<string, any>) => res.default.password)
+    const profile = await this._renderTemplate(locals)
+
+    if (this._mountTemplate(profile)) {
+      this._setBody();
+      this._setInputValidation(this._body);
+      this._setPasswordAction()
+      this.initSPALinks();
+      return true;
+    }
+
+    throw new Error('Can\'t mount template');
   }
 
   /** change
    * Получаем данные для шаблона profile, выставляем обработчики
    */
-  change() {
-    StaticModel.getProfileLocals()
-        .then((res) => res.default.change)
-        .then((locals) => this._renderTemplate(locals))
-        .then((render) => this._mountTemplate(render))
-        .then(() => this._setBody())
-      // @ts-ignore
-        .then(() => this._setInputValidation(this._body))
-        .then(() => this._setChangeAction())
-        .then(() => this.initSPALinks());
+  async change() {
+    const locals = await StaticModel.getProfileLocals().then((res : Record<string, any>) => res.default.change)
+    const profile = await this._renderTemplate(locals)
+
+    if (this._mountTemplate(profile)) {
+      this._setBody()
+      this._setInputValidation(this._body)
+      this._setChangeAction()
+      this.initSPALinks()
+      return true;
+    }
+
+    throw new Error('Can\'t mount template');
   }
 
   /** _setBody
    *  Выставляем root элемент для последующего использования
    */
   _setBody() {
-    this._body = document.querySelector('.profile__form');
+    const find = document.querySelector('.profile__form');
+    if (find instanceof Element) {
+      this._body = find;
+      return true;
+    }
+
+    throw new Error('Can\'t find .profile_form');
+  }
+
+  /** _getAcceptBtn
+   *  Ищем кнопку для действия
+   *  @param {string} selector
+   *  @return {HTMLElement}
+   *  @throws {string}
+   */
+  _getAcceptBtn(selector : string) : HTMLElement {
+    const find = this._body.querySelector(selector);
+    if (find instanceof HTMLElement) {
+      return find;
+    }
+    throw new Error('can\'t find .accept-btn');
   }
 
   /** _setChangeAction
    *  Выставляем действие на кнопку
    */
   _setChangeAction() {
-    // @ts-ignore
-    this._body.querySelector('.profile-accept-action')
-        .addEventListener('click', this._changeAction);
+    if (this._body instanceof HTMLElement) {
+      this._getAcceptBtn('.profile-accept-action').addEventListener('click', this._changeAction);
+      return true;
+    }
+    throw new Error('Undefined _body');
   }
 
   /** _changeAction
    *  Действие при сохранении изменений данных пользователя
    */
   _changeAction() {
-    // @ts-ignore
-    const inputs = this._body.querySelectorAll('input');
-    // @ts-ignore
-    const {errors, data} = validationForm(inputs);
-    if (errors.length === 0) {
-      Router.getInstance().redirect(ROUTES.PROFILE_ROUTE);
-    }
+    this._validate(this._body)
+      .then((res : Ivalidate) => {
+        console.log(res)
+        if(res.status){
+          Router.getInstance().redirect(ROUTES.PROFILE_ROUTE);
+        }
+      })
+      .catch(err => {throw new Error(err)});
   }
 
   /** _setPasswordAction
    *  Выставляем действие на кнопку
    */
   _setPasswordAction() {
-    // @ts-ignore
-    this._body.querySelector('.profile-accept-action')
-        .addEventListener('click', this._passwordAction);
+    if (this._body instanceof HTMLElement) {
+      this._getAcceptBtn('.profile-accept-action').addEventListener('click', this._passwordAction);
+      return true;
+    }
+    throw new Error('Undefined _body');
   }
 
   /** _passwordAction
    *  Действие при сохранении изменений пароля
    */
   _passwordAction() {
-    // @ts-ignore
-    const inputs = this._body.querySelectorAll('input');
-    // @ts-ignore
-    const {errors, data} = validationForm(inputs);
-    if (errors.length === 0) {
-      Router.getInstance().redirect(ROUTES.PROFILE_ROUTE);
-    }
+    this._validate(this._body)
+      .then((res : Ivalidate) => {
+        console.log(res)
+        if(res.status){
+          Router.getInstance().redirect(ROUTES.PROFILE_ROUTE);
+        }
+      })
+      .catch(err => {throw new Error(err)});
   }
 
   /** _imgHandler

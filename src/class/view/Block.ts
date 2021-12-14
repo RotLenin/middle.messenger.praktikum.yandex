@@ -1,10 +1,9 @@
 import EventBus from './EventBus';
-import Iobject from "../../types/interface/Iobject";
 
 /** Block
  *  Класс для создания компонентов
  */
-class Block {
+abstract class Block<Props extends {}>{
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -12,10 +11,9 @@ class Block {
     FLOW_RENDER: 'flow:render',
   };
 
-  // @ts-ignore
-  _element;
-  _meta : Iobject = {};
-  eventBus : any;
+  _element : HTMLElement | undefined;
+  _meta : Record<string, any> = {};
+  eventBus : EventBus;
   props;
 
   /** JSDoc
@@ -24,19 +22,17 @@ class Block {
    *
    * @return {void}
    */
-  constructor(tagName: string = 'div', props: Iobject) {
-    const eventBus = new EventBus();
+  constructor(tagName = 'div', props: Props) {
     this._meta = {
       tagName,
       props,
     };
 
     this.props = this._makePropsProxy(props);
+    this.eventBus = new EventBus();
 
-    this.eventBus = () => eventBus;
-
-    this._registerEvents(eventBus);
-    eventBus.emit(Block.EVENTS.INIT);
+    this._registerEvents(this.eventBus);
+    this.eventBus.emit(Block.EVENTS.INIT);
   }
 
   /** _registerEvents
@@ -63,8 +59,8 @@ class Block {
    */
   init() {
     this._createResources();
-    this.eventBus().emit(Block.EVENTS.FLOW_CDM);
-    this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+    this.eventBus.emit(Block.EVENTS.FLOW_CDM);
+    this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
     // this.eventBus.emit(Block.EVENTS.FLOW_CDM)
   }
 
@@ -95,7 +91,7 @@ class Block {
   _componentDidUpdate(oldProps : any, newProps : any) {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (response) {
-      this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+      this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
     }
   }
 
@@ -113,7 +109,7 @@ class Block {
    * Обьединяем новые свойства со старыми
    * @param {object} nextProps
    */
-  setProps = (nextProps : Iobject) => {
+  setProps = (nextProps : Record<string, any>) => {
     if (!nextProps) {
       return;
     }
@@ -124,7 +120,7 @@ class Block {
    *  Получаем element
    *  @return {HTMLElement}
    */
-  get element() {
+  get element() : HTMLElement | unknown {
     return this._element;
   }
 
@@ -135,7 +131,7 @@ class Block {
    *  либо как то его оборачивать, на что не хватило времени =)
    */
   _render() {
-    if(this._element){
+    if (this._element) {
       // @ts-ignore
       this._element.innerHTML = this.render();
     }
@@ -160,13 +156,13 @@ class Block {
    * @param {object} props
    * @return {Proxy}
    */
-  _makePropsProxy(props : Iobject) {
+  _makePropsProxy(props : Record<string, any>) {
     const handler = {
-      get(target : Iobject, prop : string) {
+      get(target : Record<string, any>, prop : string) {
         const value = target[prop];
         return typeof value === 'function' ? value.bind(target) : value;
       },
-      set(target : Iobject, prop : string, value : any) {
+      set(target : Record<string, any>, prop : string, value : any) {
         target[prop] = value;
         // @ts-ignore
         this.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target}, target);
@@ -193,14 +189,18 @@ class Block {
    *  Отображает элемент
    */
   show() {
-    this.element.style.display = 'block';
+    if(this._element instanceof HTMLElement){
+      this._element.style.display = 'block';
+    }
   }
 
   /** hide
    *  Скрывает элемент
    */
   hide() {
-    this.element.style.display = 'none';
+    if(this._element instanceof HTMLElement){
+      this._element.style.display = 'none';
+    }
   }
 }
 

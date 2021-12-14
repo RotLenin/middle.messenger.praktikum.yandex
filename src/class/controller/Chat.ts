@@ -1,8 +1,10 @@
 import DefaultController from './DefaultController';
 import ChatTemplate from '../view/Chat';
 import StaticModel from '../model/StaticModel';
-import Ichat from "../../types/interface/Ichat";
-import Ilocals from "../../types/interface/Ilocals";
+import Ichat from '../../types/interface/Ichat';
+import Ilocals from '../../types/interface/Ilocals';
+import IchatLocals from '../../types/interface/IchatLocals';
+import Imessage from '../../types/interface/Imessage';
 
 export enum CHAT_METHODS {
   CHAT = 'chat',
@@ -14,14 +16,13 @@ export enum CHAT_METHODS {
  */
 export default class Chat extends DefaultController {
   private static instance: Chat;
+  public _template = ChatTemplate;
 
   /** constructor
    *
    */
   constructor() {
     super();
-    this._template = ChatTemplate;
-
     /** Привязываем context */
   }
 
@@ -39,50 +40,58 @@ export default class Chat extends DefaultController {
   /** chat
    * Получаем данные для шаблона chat, выставляем обработчики
    */
-  chat() {
-    StaticModel.getChatLocals()
-        .then((res) => res.default.main)
-        .then((locals) => this._renderTemplate(locals))
-        .then((render) => this._mountTemplate(render))
-        .then(() => this.initSPALinks());
+  async chat() {
+    const locals = await StaticModel.getChatLocals()
+        .then((res : Record<string, Record<string, Ilocals>>) => res.default.main)
+    const template = await this._renderTemplate(locals);
+
+    if (this._mountTemplate(template)) {
+      this.initSPALinks()
+      return true
+    }
+
+    throw new Error('Can\'t mount template');
   }
 
   /** selected
    * Получаем данные для шаблона chat, выставляем обработчики
    * @param {array} path
    */
-  selected(path : string[]) {
-    let [id] = path;
-    StaticModel.getChatLocals()
-        .then((res) => res.default.selected)
-        .then((locals) => this._prepareSelectedLocals(locals, id))
-        .then((locals) => this._renderTemplate(locals))
-        .then((render) => this._mountTemplate(render))
-        .then(() => this.initSPALinks());
+  async selected(path: string[]) {
+    const [id] = path;
+
+    let locals = await StaticModel.getChatLocals()
+        .then((res : Record<string, Record<string, Ilocals>>) => res.default.selected);
+    locals = await this._prepareSelectedLocals(locals, +id)
+    const template = await this._renderTemplate(locals);
+
+    if (this._mountTemplate(template)) {
+      this.initSPALinks()
+      return true
+    }
+
+    throw new Error('Can\'t mount template');
   }
 
   /** _prepareSelectedLocals
    *  Тут будем выбирать сообщения для чата и собственно выбранный чат
    *  И обьединять это дело со статикой
-   *  @param {Ilocals} locals
+   *  @param {IchatLocals} IchatLocals
    *  @param {number} id - chatId
    *  @return {Ilocals}
    *  */
-  _prepareSelectedLocals(locals : Ilocals, id : string) {
-    // @ts-ignore
-    id = 1*id;
-    // @ts-ignore
+  _prepareSelectedLocals(IchatLocals: IchatLocals, id: number) {
     return StaticModel.getMessagesForChat(id)
-        .then((res) => {
-          // @ts-ignore
-          // @ts-ignore
-          locals.locals.messages = res.messages;
-          // @ts-ignore
-          const selectedChat = locals.locals.chats.find((el : Ichat) => el.id === id);
-          // @ts-ignore
-          locals.locals.selectedChat = selectedChat;
-          locals.headers.title = selectedChat.name;
-          return locals;
+        .then((res: { messages: Imessage[]; }) => {
+          IchatLocals.locals.messages = res.messages;
+
+          const selectedChat = IchatLocals.locals.chats.find((el : Ichat) => el.id === id);
+          if (selectedChat) {
+            IchatLocals.locals.selectedChat = selectedChat;
+            IchatLocals.headers.title = selectedChat.name;
+            return IchatLocals;
+          }
+          throw new Error('Can\'t find chat with id : ' + id);
         });
   }
 }

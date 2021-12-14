@@ -3,7 +3,7 @@
  * @param {*} val - проверяемое значение
  * @return {boolean}
  */
-export function empty( val : any ) {
+export function empty( val : unknown ) {
   if (val === undefined) {
     return true;
   }
@@ -15,6 +15,7 @@ export function empty( val : any ) {
     return false;
   }
 
+  // @ts-ignore
   if (val == null || val.length === 0) {
     return true;
   }

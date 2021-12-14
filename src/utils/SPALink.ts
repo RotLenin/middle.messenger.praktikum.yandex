@@ -1,6 +1,5 @@
 import Router from '../class/Router';
 import {nodeListforEach} from './nodeListHelper';
-import Iobject from "../types/interface/Iobject";
 
 /** initAllSPALink
  *  ищет все элементы с data-path и вешает им событие перерисовки с Router
@@ -39,7 +38,7 @@ export function spaLink(path : string) {
  *  {id : 2}
  *  @return {string}
  * */
-export function routeParamsReplace(route : string, replace : Iobject): string {
+export function routeParamsReplace(route : string, replace : Record<string, any>): string {
   for (const key in replace) {
     if (Object.prototype.hasOwnProperty.call(replace, key)) {
       const value = replace[key];

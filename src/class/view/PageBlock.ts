@@ -1,16 +1,16 @@
 import Block from './Block';
+import IpageBlock from "../../types/interface/IpageBlock";
 import {setTitle} from '../../utils/HeaderHelper';
-import Iobject from "../../types/interface/Iobject";
 
 /** PageBlock
  *  Расширяем Block до шаблона страницы
  */
-class PageBlock extends Block {
+class PageBlock extends Block<IpageBlock> {
   /**
    * @param {string} tagName
    * @param {object} props
    */
-  constructor(tagName : string, props : Iobject) {
+  constructor(tagName : string, props : IpageBlock) {
     super(tagName, props);
   }
 

@@ -4,6 +4,7 @@ import IinputWithError from '../types/interface/IinputWithError';
 import ISPALink from '../types/interface/ISPALink';
 
 import send from '../static/img/send.png';
+import Ilocals from '../types/interface/Ilocals';
 
 const profileFields = [
   {name: 'Почта', value: 'pochta@yandex.ru'},
@@ -96,7 +97,7 @@ const password: ISPALink = {
 const out: ISPALink = {title: 'Выйти', path: ROUTES.LOGIN_ROUTE};
 const backBtn = {img: send, path: ROUTES.CHAT_ROUTE};
 
-const profile = {
+const profile : Record<string, Ilocals> = {
   profile: {
     headers: {
       title: 'Профиль',

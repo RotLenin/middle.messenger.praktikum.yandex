@@ -1,7 +1,4 @@
 import IhttpTransportOptions from '../../types/interface/IhttpTransportOptions';
-import IhttpTransportPrepareData
-  from '../../types/interface/IhttpTransportPrepareData';
-import Iobject from "../../types/interface/Iobject";
 import {queryStringify} from '../../utils/queryString';
 
 const enum METHODS {
@@ -75,54 +72,6 @@ class HTTPTransport {
     }, options.timeout);
   };
 
-  /** _prepareData
-   * Подготавливаем body для POST|PUT|DELETE запросов
-   * @param {object} data
-   * @param {string} type
-   * @return {IhttpTransportPrepareData}
-   */
-  _prepareData = (data: object, type: string) => {
-    let params = {};
-    if (type === 'json') {
-      params = this._json(data);
-    }
-    if (type === 'form') {
-      params = this._form(data);
-    }
-    return params;
-  };
-
-  /** _form
-   * Имитация отправки из формы
-   * TODO: добавить функционал отправки файла
-   * @param {object} data
-   * @return {IhttpTransportPrepareData}
-   */
-  _form = (data: Iobject) => {
-    const formData = new FormData();
-    for (const key in data) {
-      if (Object.prototype.hasOwnProperty.call(data, key)) {
-        formData.append(key, data[key]);
-      }
-    }
-
-    return {
-      data: formData,
-    };
-  };
-
-  /** _json
-   * Преобразуем данные в JSON, добавляем соответствующий заголовок
-   * @param {object} data
-   * @return {IhttpTransportPrepareData}
-   */
-  _json = (data: object) => {
-    return {
-      header: {'Content-type': 'application/json;charset=UTF-8'},
-      data: JSON.stringify(data),
-    };
-  };
-
   /** _request
    * Подготаливаем и отправляем XMLHttpRequest
    * @param {string} url
@@ -131,20 +80,6 @@ class HTTPTransport {
    * @return {XMLHttpRequest}
    */
   _request = (url: string, options: IhttpTransportOptions, timeout = 5000) => {
-    if (options.data) {
-      const type = options.type || 'json';
-      const params: IhttpTransportPrepareData = this._prepareData(
-          options.data,
-          type
-      );
-      delete options.type;
-      if (!options.headers) {
-        options.headers = {};
-      }
-      options.headers = Object.assign(options.headers, params.header);
-      options.data = params.data;
-    }
-
     const {headers, data} = options;
 
     return new Promise(function(resolve, reject) {
@@ -159,18 +94,13 @@ class HTTPTransport {
       // Таймаут
       xhr.timeout = timeout;
       xhr.ontimeout = () => {
-        reject(xhr);
-        /*
         reject({
             status: 408,
             statusText: 'Client timeout'
         });
-         */
       };
 
       xhr.onload = function() {
-        resolve(xhr);
-        /*
         if (this.status >= 200 && this.status < 300) {
             resolve(xhr);
         } else {
@@ -181,21 +111,21 @@ class HTTPTransport {
                 statusText: xhr.statusText
             });
         }
-         */
       };
 
       xhr.onerror = function() {
-        reject(xhr);
-        /*
         reject({
             status: this.status,
             statusText: xhr.statusText
         });
-         */
       };
 
-      // @ts-ignore
-      data ? xhr.send(data) : xhr.send();
+      if(data){
+        // @ts-ignore
+        xhr.send(data)
+      } else {
+        xhr.send()
+      }
     });
   };
 }

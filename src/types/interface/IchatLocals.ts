@@ -11,6 +11,7 @@ export default interface IchatLocals extends Ilocals{
     attachmentDropdown : Idropdown[],
     dotDropdown : Idropdown[],
     messages : Imessage[],
-    profileLink? : string
+    profileLink? : string,
+    selectedChat? : any,
   }
 }

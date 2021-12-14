@@ -1,8 +1,18 @@
 /** Утилита валидации полей формы */
-
 import {empty} from './myLodash';
 import {nodeListforEach} from './nodeListHelper';
-import Iobject from "../types/interface/Iobject";
+
+const nameValidator : Record<string, (value : string) => boolean>= {
+  first_name : (value : string) => value.match('^[а-яА-ЯёЁa-zA-Z]+$') !== null,
+  second_name : (value : string) => value.match('^[а-яА-ЯёЁa-zA-Z]+$') !== null,
+  login : (value : string) => (value.length >= 3 && value.length <= 20 && value.match('^[a-zA-Z][a-zA-Z0-9-_]+$') !== null),
+  email : (value : string) => value.match('(?:[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\\])') !== null,
+  phone : (value : string) => value.match('^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$') !== null,
+}
+
+const typeValidator : Record<string, (value : string) => boolean> = {
+  password : (value) => value.match('(?=^.{8,40}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$') !== null,
+}
 
 /** validationField
  * Валидация input - передает Node в validation
@@ -28,57 +38,18 @@ function validation(target : HTMLInputElement) {
     return false;
   }
   // Проверяем по name
-  if (!nameValidation(name, value)) {
+  if (Object.prototype.hasOwnProperty.call(nameValidator, name) && !nameValidator[name](value)) {
     setError(target, name);
     return false;
   }
   // Проверяем по type
-  if (!typeValidation(type, value)) {
+  if (Object.prototype.hasOwnProperty.call(typeValidator, type) && !typeValidator[type](value)) {
     setError(target, name);
     return false;
   }
-  // TODO : реализовать более хитрую логику для повтора пороля и тд
-  // TODO : в идеале писать разные ошибки на разные проверки как в yup
 
   resetError(target, name);
   return true;
-}
-
-/** nameValidation
- * Ищем проверки по имени поля
- * @param {string} name
- * @param {*} value
- * @return {boolean}
- */
-function nameValidation(name : string, value : string) {
-  switch (name) {
-    case 'first_name':
-    case 'second_name':
-      return value.match('^[а-яА-ЯёЁa-zA-Z]+$') !== null;
-    case 'login':
-      return (value.length >= 3 && value.length <= 20 && value.match('^[a-zA-Z][a-zA-Z0-9-_]+$') !== null);
-    case 'email':
-      return value.match('^[-\\w.]+@([A-z0-9][-A-z0-9]+\\.)+[A-z]{2,4}$') !== null;
-    case 'phone':
-      return value.match('^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$');
-    default:
-      return true
-  }
-}
-
-/** typeValidation
- * Ищем проверки по type поля
- * @param {string} type
- * @param {*} value
- * @return {boolean}
- */
-function typeValidation(type : string, value : string) {
-  switch (type) {
-    case 'password':
-      return value.match('(?=^.{8,40}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$');
-    default:
-      return true
-  }
 }
 
 /** validationForm
@@ -91,7 +62,7 @@ function typeValidation(type : string, value : string) {
  */
 export function validationForm(inputs : NodeList) {
   const errors : string[] = [];
-  const data : Iobject = {};
+  const data : Record<string, any> = {};
 
   // @ts-ignore
   nodeListforEach(inputs, (input: HTMLInputElement) => {
@@ -124,7 +95,7 @@ function findErrorField(name : string) {
 function resetError(target : HTMLElement, name : string) {
   target.classList.remove('form-input_error-color');
   const error = findErrorField(name);
-  if(error){
+  if (error) {
     error.innerHTML = '';
   } else {
     console.log('cant find error field: '+name);
@@ -140,7 +111,7 @@ function resetError(target : HTMLElement, name : string) {
 function setError(target : HTMLElement, name : string) {
   target.classList.add('form-input_error-color');
   const error = findErrorField(name);
-  if(error){
+  if (error) {
     // @ts-ignore
     error.innerHTML = error?.dataset?.error;
   } else {

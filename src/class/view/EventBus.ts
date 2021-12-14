@@ -1,10 +1,10 @@
 /** EventBus
  *  Шина действий
  */
-import Iobject from "../../types/interface/Iobject";
+import '../../types/type/Callback';
 
 class EventBus {
-  public listeners : Iobject;
+  public listeners : Record<string, any>;
 
   /**
    *
@@ -17,7 +17,7 @@ class EventBus {
    * @param {string} event
    * @param {function} callback
    */
-  on(event : string, callback: any) {
+  on(event : string, callback: CallbackFunctionVariadicAnyReturn) {
     if (!this.listeners[event]) {
       this.listeners[event] = [];
     }
@@ -29,13 +29,15 @@ class EventBus {
    * @param {string} event
    * @param {function} callback
    */
-  off(event : string, callback : any) {
+  off(event : string, callback : CallbackFunctionVariadicAnyReturn) {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
     }
 
     this.listeners[event] = this.listeners[event].filter(
-        (listener: any) => listener !== callback
+        (listener: any) => {
+          return listener !== callback
+        }
     );
   }
 
@@ -43,12 +45,12 @@ class EventBus {
    * @param {string} event
    * @param {array} args
    */
-  emit(event : string, ...args : any) {
+  emit(event : string, ...args : any[]) {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
     }
 
-    this.listeners[event].forEach(function(listener : any) {
+    this.listeners[event].forEach(function(listener : CallbackFunctionVariadicAnyReturn) {
       listener(...args);
     });
   }

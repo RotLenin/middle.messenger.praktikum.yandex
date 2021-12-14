@@ -1,6 +1,6 @@
 import PageBlock from './PageBlock';
+import IpageBlock from "../../types/interface/IpageBlock";
 import compileChatTemplate from '../../pages/chat.pug';
-import Iobject from "../../types/interface/Iobject";
 
 import '../../template/chat/chat.css';
 import '../../components/chatMenu/chatMenu.css';
@@ -22,7 +22,7 @@ class Chat extends PageBlock {
   /**
    * @param {object} locals
    */
-  constructor(locals : Iobject) {
+  constructor(locals : IpageBlock) {
     locals.template = compileChatTemplate;
     super('div', locals);
   }
