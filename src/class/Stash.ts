@@ -191,7 +191,7 @@ export default class Stash {
     if(!this._stash[STASH_ENUM.SUBSCRIBER][STASH_ENUM.CHATS]){
       this._stash[STASH_ENUM.SUBSCRIBER][STASH_ENUM.CHATS] = [];
     }
-    this._stash[STASH_ENUM.SUBSCRIBER].chat.push(subscriber);
+    this._stash[STASH_ENUM.SUBSCRIBER].chats.push(subscriber);
   }
 
 
