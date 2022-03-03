@@ -1,8 +1,9 @@
-import {queryStringify} from '../utils/queryString';
+import Auth from './Auth';
+// import {queryStringify} from '../utils/queryString';
 
 import Iroute from '../types/interface/Iroute';
 
-import {ROUTES, DEFAULT_ROUTE} from '../constants/routes';
+import {ROUTES, DEFAULT_ROUTE, LOGIN_ROUTE, NOT_AUTH_ROUTES, ERROR_ROUTE} from '../constants/routes';
 
 /**
  *  Трудно заставить parcel вечно смотреть на index.html
@@ -10,10 +11,7 @@ import {ROUTES, DEFAULT_ROUTE} from '../constants/routes';
  *  TODO: Возможно есть смысл перейти на жэш роутер
  *  */
 export default class Router {
-  // @ts-ignore
   private _route: Iroute;
-  private _origin = location.origin + '/index.html';
-
   private static instance: Router;
 
   /** getInstance
@@ -27,18 +25,33 @@ export default class Router {
     return Router.instance;
   }
 
+  /** init
+   *  @description Вешаем наш роутер на window
+   */
+  public init() {
+    window.onpopstate = this.findRoute.bind(this);
+  }
+
   /** findRoute
    *  Ищем роут для текущей страницы
    */
-  public findRoute() {
-    if (location.search === '') {
+  public async findRoute() {
+    /** Если пользователь не авторизован - кидаем на Login */
+    const auth = await Auth.getInstance().auth();
+    // console.log('auth', auth);
+    /** Редиректим закрытые вкладки на Login */
+    if (!auth && !(NOT_AUTH_ROUTES.find((el) => el === location.pathname))) {
+      this.redirect(LOGIN_ROUTE);
+    }
+    /** обрабатываем пустые запросы как стандартный роут Login */
+    if (location.pathname === '' || location.pathname === '/') {
       this._route = DEFAULT_ROUTE;
       this._runMethod([]);
       return;
     }
 
-    const params = new URLSearchParams(document.location.search);
-    const path: string | null = params.get('path');
+    // const params = new URLSearchParams(document.location.search);
+    const path: string | null = location.pathname;
     /** Если нет пути - то идем на стандартный Роут */
     if (!path) {
       this._route = DEFAULT_ROUTE;
@@ -48,12 +61,15 @@ export default class Router {
     /** Обходим наши проверки */
     // @ts-ignore
     this._route = ROUTES.find(
+        // @ts-ignore
         (route) => path.match(this._createRegExp(route.match))
     );
-    this._runMethod(this._getMatches(path));
     if (!this._route) {
-      console.log('404');
+      this._route = ERROR_ROUTE;
+      this._runMethod([]);
     }
+
+    this._runMethod(this._getMatches(path));
   }
 
   /** _createRegExp
@@ -65,7 +81,7 @@ export default class Router {
   private _createRegExp(match : string) {
     return '^' + match.split('/').map((el) => {
       if (el.includes(':')) {
-        return '(\\d)'
+        return '(\\d+)'
       }
       return el
     }).join('/') + '$';
@@ -89,8 +105,8 @@ export default class Router {
     const index = 1;
     const matches = [];
     let match;
+    // @ts-ignore
     const regex = new RegExp(this._createRegExp(this._route.match), 'g');
-
     while ((match = regex.exec(path))) {
       matches.push(match[index]);
     }
@@ -98,14 +114,14 @@ export default class Router {
   }
 
   /** redirect
-   * Вместо оперезагрузки страницы - push-им в историю и запускаем Router
+   * Вместо перезагрузки страницы - push-им в историю и запускаем Router
    * @param {string}path
    */
   public redirect(path : string) {
     history.pushState(
         {},
         '',
-        this._origin + '?' + queryStringify({path: path})
+        location.origin + path
     );
     this.findRoute();
   }

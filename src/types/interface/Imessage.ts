@@ -1,10 +1,13 @@
+import {MESSAGE_TYPES} from '../../constants/messageTypes';
+
 export default interface Imessage{
-  // TODO: сверять с возможными типами
-  type : string;
-  message? : string;
-  src? : string;
-  // TODO: как дадут api - узнаем в каком формате приходят данные
+  id : number;
+  user_id : number;
+  chat_id? : number;
+  type : MESSAGE_TYPES;
+  content : string;
   time : string;
-  // TODO: Пока bool, потом будет ID автора
-  author : boolean;
+  formatDate? : string;
+  is_read : boolean;
+  file : null;
 }

@@ -9,7 +9,7 @@ export default class StaticModel extends DefaultModel {
    *  @return {object}
    */
   public static getLoginLocals() : Record<string, any> {
-    return import('../../data/login');
+    return import('../../constants/login');
   }
 
   /** getSignupLocals
@@ -17,37 +17,15 @@ export default class StaticModel extends DefaultModel {
    *  @return {object}
    */
   public static getSignupLocals() : Record<string, any> {
-    return import('../../data/signup');
+    return import('../../constants/signup');
   }
 
-  /** getChatLocals
+  /** getNewChatLocals
    *  Получаем locals для шаблона chat
    *  @return {object}
    */
-  public static getChatLocals() : Record<string, any> {
-    return import('../../data/chats');
-  }
-
-  /** getMessages
-   *  Получаем messages
-   *  @return {object}
-   */
-  public static getMessages() : Record<string, any> {
-    return import('../../data/messages');
-  }
-
-  /** getMessagesForChat
-   *  Получаем messages для конкретного чата
-   *  @param {number} id
-   *  @return {object}
-   */
-  public static getMessagesForChat(id : number) : Record<string, any> {
-    return this.getMessages()
-        .then((res: { default: any[]; }) => {
-          return res.default.find((el) => {
-            return el.chatId === id;
-          });
-        });
+  public static getNewChatLocals() : Record<string, any> {
+    return import('../../constants/newChats');
   }
 
   /** getProfileLocals
@@ -55,6 +33,14 @@ export default class StaticModel extends DefaultModel {
    *  @return {object}
    */
   public static getProfileLocals() : Record<string, any> {
-    return import('../../data/profile');
+    return import('../../constants/profile');
+  }
+
+  /** getProfileLocals
+   *  Получаем locals для шаблона profile
+   *  @return {object}
+   */
+  public static getError() : Record<string, any> {
+    return import('../../constants/errors');
   }
 }

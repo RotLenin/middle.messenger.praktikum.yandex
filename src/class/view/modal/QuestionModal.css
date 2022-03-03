@@ -1,0 +1,32 @@
+.question-modal {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 15px;
+  background: #fff;
+  box-shadow: 0 0 6px rgb(0 0 0 / 14%);
+  border-radius: 12px;
+}
+
+.question-modal__title-wrapper {
+  margin: 10px 0 20px;
+  text-align: center;
+}
+
+.question-modal__title {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.question-modal__input-wrapper {
+  min-width: 200px;
+  width: 100%;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.question-modal__action-error {
+  margin: 10px 0;
+  text-align: center;
+}

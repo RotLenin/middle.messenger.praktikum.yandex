@@ -1,10 +1,17 @@
+import IhttpTransportOptions from '../types/interface/IhttpTransportOptions';
+
+export enum TYPES {
+  JSON = 'json',
+  FORM = 'form',
+}
+
 /** _form
  * Имитация отправки из формы
  * TODO: добавить функционал отправки файла
  * @param {object} data
  * @return {IhttpTransportPrepareData}
  */
-function _form(data: Record<string, any>){
+function _form(data: Record<string, any>) {
   const formData = new FormData();
   for (const key in data) {
     if (Object.prototype.hasOwnProperty.call(data, key)) {
@@ -13,7 +20,7 @@ function _form(data: Record<string, any>){
   }
 
   return {
-    data : formData
+    data: formData,
   };
 }
 
@@ -22,9 +29,9 @@ function _form(data: Record<string, any>){
  * @param {object} data
  * @return {IhttpTransportPrepareData}
  */
-function _json(data : Record<string, any>){
+function _json(data : Record<string, any>) {
   return {
-    header: {'Content-type': 'application/json;charset=UTF-8'},
+    headers: {'Content-type': 'application/json;charset=UTF-8'},
     data: JSON.stringify(data),
   };
 }
@@ -35,12 +42,12 @@ function _json(data : Record<string, any>){
  * @param {string} type
  * @return {IhttpTransportPrepareData}
  */
-export function prepareData(data: Record<string, any>, type: string){
+export function prepareData(data: Record<string, any>, type: string) : IhttpTransportOptions {
   let params = {};
-  if (type === 'json') {
+  if (type === TYPES.JSON) {
     params = _json(data);
   }
-  if (type === 'form') {
+  if (type === TYPES.FORM) {
     params = _form(data);
   }
   return params;

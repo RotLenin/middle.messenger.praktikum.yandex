@@ -1,4 +1,5 @@
 .form-input {
+  box-sizing: border-box;
   width: 100%;
 }
 
@@ -8,6 +9,7 @@
 }
 
 .form-input__input {
+  box-sizing: border-box;
   width: 100%;
   border: none;
   border-bottom: 1px solid #3369f3;

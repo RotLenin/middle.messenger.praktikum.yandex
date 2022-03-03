@@ -1,5 +1,5 @@
 import PageBlock from './PageBlock';
-import IpageBlock from "../../types/interface/IpageBlock";
+import IpageBlock from '../../types/interface/IpageBlock';
 import compileFormTemplate from '../../pages/form.pug';
 
 import '../../template/form/form.css';
@@ -18,6 +18,17 @@ class Form extends PageBlock {
     locals.template = compileFormTemplate;
     super('div', locals);
   }
+
+  /** init
+   *  @description Переопределяем
+   */
+  init() {
+  }
+
+  /** update
+   *  @description Переопределяем
+   */
+  update() {}
 }
 
 export default Form;

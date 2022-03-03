@@ -1,5 +1,5 @@
 import PageBlock from './PageBlock';
-import IpageBlock from "../../types/interface/IpageBlock";
+import IpageBlock from '../../types/interface/IpageBlock';
 import compileProfileTemplate from '../../pages/profile.pug';
 
 import '../../template/profile/profile.css';
@@ -20,6 +20,16 @@ class Profile extends PageBlock {
     locals.template = compileProfileTemplate;
     super('div', locals);
   }
+
+  /** init
+   *  @description Переопределяем
+   */
+  init() {}
+
+  /** update
+   *  @description Переопределяем
+   */
+  update() {}
 }
 
 export default Profile;

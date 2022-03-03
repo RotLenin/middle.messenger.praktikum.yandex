@@ -1,0 +1,14 @@
+extends ../../../template/modal/modal
+
+include ../../../components/acceptBtn/acceptBtn
+include ../../../components/customFileUploader/customFileUploader
+
+block modal
+  .profile-img-modal
+    .profile-img-modal__title-wrapper
+      .profile-img-modal__title.text_main= 'Загрузить файл'
+    .profile-img-modal__file-wrapper
+      +customFileUploader('profileImg')
+    .profile-img-modal__action-wrapper
+      +button('Примернить')
+      .profile-img-modal__action-error.text_danger

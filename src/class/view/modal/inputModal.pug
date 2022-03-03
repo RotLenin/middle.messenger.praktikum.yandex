@@ -1,0 +1,14 @@
+extends ../../../template/modal/modal
+
+include ../../../components/formInput/formInput
+include ../../../components/acceptBtn/acceptBtn
+
+block modal
+  .input-modal
+    .input-modal__title-wrapper
+      .input-modal__title.text_main= title
+    .input-modal__input-wrapper
+      +formInput(input.name, input.label, input.placeholder, input.type, input.errorText)
+    .profile-img-modal__action-wrapper
+      +button(btnText)
+      .profile-img-modal__action-error.text_danger

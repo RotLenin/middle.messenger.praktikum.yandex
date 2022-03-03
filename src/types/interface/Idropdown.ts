@@ -1,4 +1,6 @@
 export default interface Idropdown {
+  id : string,
   icon : string,
-  name : string
+  name : string,
+  action? : () => void
 }

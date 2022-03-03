@@ -15,7 +15,7 @@ export function initAllSPALink() {
  *  Вытаскивает path из spaLink элемента
  *  Игнорируем this - не понимает что это handler на click
  */
-function spaLinkElement() {
+export function spaLinkElement() {
   // @ts-ignore
   const {path} = this.dataset;
   spaLink(path);

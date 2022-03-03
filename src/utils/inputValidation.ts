@@ -3,15 +3,17 @@ import {empty} from './myLodash';
 import {nodeListforEach} from './nodeListHelper';
 
 const nameValidator : Record<string, (value : string) => boolean>= {
-  first_name : (value : string) => value.match('^[а-яА-ЯёЁa-zA-Z]+$') !== null,
-  second_name : (value : string) => value.match('^[а-яА-ЯёЁa-zA-Z]+$') !== null,
-  login : (value : string) => (value.length >= 3 && value.length <= 20 && value.match('^[a-zA-Z][a-zA-Z0-9-_]+$') !== null),
-  email : (value : string) => value.match('(?:[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\\])') !== null,
-  phone : (value : string) => value.match('^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$') !== null,
+  first_name: (value : string) => value.match('^[а-яА-ЯёЁa-zA-Z]+$') !== null,
+  second_name: (value : string) => value.match('^[а-яА-ЯёЁa-zA-Z]+$') !== null,
+  login: (value : string) => (value.length >= 3 && value.length <= 20 && value.match('^[a-zA-Z][a-zA-Z0-9-_]+$') !== null),
+  email: (value : string) => value.match('(?:[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\\])') !== null,
+  phone: (value : string) => value.match('^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$') !== null,
+  message: (value : string) => value.length > 0,
+  chat_name: (value : string) => value.length > 0,
 }
 
 const typeValidator : Record<string, (value : string) => boolean> = {
-  password : (value) => value.match('(?=^.{8,40}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$') !== null,
+  password: (value) => value.match('(?=^.{8,40}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$') !== null,
 }
 
 /** validationField
@@ -25,12 +27,21 @@ export function validationField(event : Event) {
   return validation(target);
 }
 
+/** validationInput
+ * Валидация input - передает Node в validation
+ * @param {HTMLInputElement} input
+ * @return {boolean}
+ */
+export function validationInput(input : HTMLInputElement) {
+  return validation(input);
+}
+
 /** validation
  * Собственно сама проверка на корректность
  * @param {HTMLInputElement} target
  * @return {boolean}
  */
-function validation(target : HTMLInputElement) {
+function validation(target : HTMLInputElement) : boolean {
   const {value, type, name} = target;
   // Если поле пустое - нет смысла дальше проверять
   if (empty(value)) {
@@ -39,7 +50,7 @@ function validation(target : HTMLInputElement) {
   }
   // Проверяем по name
   if (Object.prototype.hasOwnProperty.call(nameValidator, name) && !nameValidator[name](value)) {
-    setError(target, name);
+    console.log('nameValidator');
     return false;
   }
   // Проверяем по type
@@ -80,9 +91,9 @@ export function validationForm(inputs : NodeList) {
 /** findErrorField
  * Ищем поле, куда необходимо вписать ошибку
  * @param {string} name
- * @return {HTMLInputElement}
+ * @return {HTMLElement}
  */
-function findErrorField(name : string) {
+function findErrorField(name : string) : HTMLElement | null {
   return document.querySelector(`.input-error[name=${name}]`);
 }
 
@@ -106,14 +117,18 @@ function resetError(target : HTMLElement, name : string) {
  * Выставляем сообщение об ошибке
  * @param {HTMLElement} target
  * @param {string} name
+ * @param {string} errorText
  * @return {void}
  */
-function setError(target : HTMLElement, name : string) {
+export function setError(target : HTMLElement, name : string, errorText : string | null = null) {
   target.classList.add('form-input_error-color');
   const error = findErrorField(name);
   if (error) {
-    // @ts-ignore
-    error.innerHTML = error?.dataset?.error;
+    if (errorText === null) {
+      error.innerHTML = error.dataset.error ? error.dataset.error : '';
+    } else {
+      error.innerHTML = errorText;
+    }
   } else {
     console.log('cant find error field: '+name);
   }

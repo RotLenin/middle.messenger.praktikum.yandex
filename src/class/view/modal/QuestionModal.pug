@@ -1,0 +1,11 @@
+extends ../../../template/modal/modal
+
+include ../../../components/acceptBtn/acceptBtn
+
+block modal
+  .question-modal
+    .question-modal__title-wrapper
+      .question-modal__title.text_main= title
+    .profile-img-modal__action-wrapper
+      +button(btnText)
+      .profile-img-modal__action-error.text_danger

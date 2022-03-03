@@ -1,0 +1,21 @@
+div(data-path= chat.path).chat-menu-item.no_decoration
+    .chat-menu-item__avatar-wrapper.bg_bright
+      if(chat.avatar !== null)
+        img(src=chat.avatar).chat-menu-item__avatar
+      else
+        img.chat-menu-item__avatar
+    .chat-menu-item__message-wrapper
+        .chat-menu-item__title-wrapper
+            .chat-menu-item__title.text_main= chat.title
+            if(chat.last_message)
+              .chat-menu-item__data.text_second= chat.last_message.formatDate
+        .chat-menu-item__content-wrapper
+            .chat-menu-item__message
+              if(chat.last_message !== null)
+                if chat.last_message.user.login === user.login
+                    span.text_main= 'Вы:'
+                span.text_second= chat.last_message.content
+            .chat-menu-item__notification-wrapper
+                if chat.unread_count !== 0
+                    .chat-menu-item__notification.text_white= chat.unread_count
+

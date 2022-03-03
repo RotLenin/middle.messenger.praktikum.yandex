@@ -1,18 +1,19 @@
 extends ../template/profile/profile
 
 include ../components/profileImg/profileImg
+include ../components/acceptBtn/acceptBtn
 include ../components/profileInput/profileInput
 include ../components/SPALink/SPALink
 
 block profileBody
-    +profileImg('Имя')
+    +profileImg('Имя', avatar)
     .profile__form
       case state
         when 'main'
           .profile__info
             each item in profile
               .profile__field
-                .text_main= item.name
+                .text_main= item.title
                 .text_second= item.value
           .profile-actions
             .profile__field
@@ -20,7 +21,7 @@ block profileBody
             .profile__field
               +SPALink(password.title, password.path)
             .profile__field
-              +SPALink(out.title, out.path).text_danger.no_decoration
+              div(id=out.id).text_danger.no_decoration= out.title
         when 'change'
           .profile__info
             each item in profile

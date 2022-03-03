@@ -3,15 +3,16 @@ import EventBus from './EventBus';
 /** Block
  *  Класс для создания компонентов
  */
-abstract class Block<Props extends {}>{
+abstract class Block<Props extends Record<string, any>> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
     FLOW_CDU: 'flow:component-did-update',
+    FLOW_CU: 'flow:component-did-unmount',
     FLOW_RENDER: 'flow:render',
   };
 
-  _element : HTMLElement | undefined;
+  _element : HTMLElement | null;
   _meta : Record<string, any> = {};
   eventBus : EventBus;
   props;
@@ -23,16 +24,20 @@ abstract class Block<Props extends {}>{
    * @return {void}
    */
   constructor(tagName = 'div', props: Props) {
+    // console.log('Block constructor');
     this._meta = {
       tagName,
       props,
     };
 
-    this.props = this._makePropsProxy(props);
     this.eventBus = new EventBus();
-
     this._registerEvents(this.eventBus);
+
+    this.props = this._makePropsProxy(props);
+
     this.eventBus.emit(Block.EVENTS.INIT);
+
+    this._makePropsProxy = this._makePropsProxy.bind(this);
   }
 
   /** _registerEvents
@@ -50,6 +55,7 @@ abstract class Block<Props extends {}>{
    *  Создаем root для Block
    */
   _createResources() {
+    // console.log('Block _createResources');
     const {tagName} = this._meta;
     this._element = this._createDocumentElement(tagName);
   }
@@ -61,8 +67,14 @@ abstract class Block<Props extends {}>{
     this._createResources();
     this.eventBus.emit(Block.EVENTS.FLOW_CDM);
     this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
-    // this.eventBus.emit(Block.EVENTS.FLOW_CDM)
   }
+
+  /** update
+   *  Переписываем у наследников
+   */
+  abstract update():void;
+  abstract update(newProps : Record<string, any>):void;
+  abstract update(newProps? : Record<string, any>):void
 
   /** componentDidMount
    *  Действия перед монтированием Block
@@ -77,11 +89,6 @@ abstract class Block<Props extends {}>{
    */
   componentDidMount() {}
 
-  /**
-   *
-   */
-  dispatchComponentDidMount() {}
-
   /** _componentDidUpdate
    * Проверка - необходимо ли перерисовывать Block
    * Вызывает изменяемый метод componentDidUpdate
@@ -95,9 +102,12 @@ abstract class Block<Props extends {}>{
     }
   }
 
+
   /** componentDidUpdate
    * Проверка - необходимо ли перерисовывать Block
    * Изменяется потомками
+   * @param {any} oldProps
+   * @param {any} newProps
    * @return {boolean}
    */
   componentDidUpdate(oldProps : any, newProps : any) {
@@ -137,11 +147,10 @@ abstract class Block<Props extends {}>{
     }
   }
 
-  /** render
-   *  Изменяемый унаследованными блоками метод
+  /** Переопределяемый метод
+   *
    */
-  render() {
-  }
+  render() {}
 
   /** getContent
    *  Отдает содержимое элемента
@@ -151,12 +160,14 @@ abstract class Block<Props extends {}>{
     return this.element;
   }
 
-  /** _makePropsProxy
+    /** _makePropsProxy
    * Создает proxy отслеживающий свойства Блока
    * @param {object} props
    * @return {Proxy}
    */
   _makePropsProxy(props : Record<string, any>) {
+    const eventBus = this.eventBus;
+
     const handler = {
       get(target : Record<string, any>, prop : string) {
         const value = target[prop];
@@ -164,8 +175,7 @@ abstract class Block<Props extends {}>{
       },
       set(target : Record<string, any>, prop : string, value : any) {
         target[prop] = value;
-        // @ts-ignore
-        this.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target}, target);
+        eventBus.emit(Block.EVENTS.FLOW_CDU, {...target}, target);
         return true;
       },
       deleteProperty() {
@@ -185,11 +195,28 @@ abstract class Block<Props extends {}>{
     return document.createElement(tagName);
   }
 
+  /** textToHtml
+   * @description текстов в HTML
+   * @param {string} htmlString
+   * @return {Element}
+   * @throws {Error}
+   */
+  textToHtml(htmlString : string) : Element {
+    const temp : HTMLElement= document.createElement('div');
+    temp.innerHTML = htmlString;
+
+    const child : Element | null = temp.children[0];
+    if (!child) {
+      throw new Error('Error');
+    }
+    return child;
+  }
+
   /** show
    *  Отображает элемент
    */
   show() {
-    if(this._element instanceof HTMLElement){
+    if (this._element instanceof HTMLElement) {
       this._element.style.display = 'block';
     }
   }
@@ -198,7 +225,7 @@ abstract class Block<Props extends {}>{
    *  Скрывает элемент
    */
   hide() {
-    if(this._element instanceof HTMLElement){
+    if (this._element instanceof HTMLElement) {
       this._element.style.display = 'none';
     }
   }

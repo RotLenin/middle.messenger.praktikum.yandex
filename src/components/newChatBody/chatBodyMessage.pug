@@ -1,0 +1,8 @@
+.chat-body-message__wrapper
+    case message.type
+        when 'img'
+            img(src=message.src).chat-body-message__img
+        when 'message'
+        default
+            .chat-body-message__text.text_main= message.content
+    .chat-body-message__time.text_second= message.formatDate

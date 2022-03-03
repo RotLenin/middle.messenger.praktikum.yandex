@@ -46,3 +46,7 @@
 .profile__field_center {
   justify-content: center;
 }
+
+#logout {
+  cursor: pointer;
+}

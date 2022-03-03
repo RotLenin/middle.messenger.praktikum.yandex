@@ -1,0 +1,32 @@
+.input-modal {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 15px;
+  background: #fff;
+  box-shadow: 0 0 6px rgb(0 0 0 / 14%);
+  border-radius: 12px;
+}
+
+.input-modal__title-wrapper {
+  margin: 10px 0 20px;
+  text-align: center;
+}
+
+.input-modal__title {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.input-modal__input-wrapper {
+  min-width: 200px;
+  width: 100%;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-modal__action-error {
+  margin: 10px 0;
+  text-align: center;
+}
