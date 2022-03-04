@@ -3,7 +3,7 @@ import { expect } from "chai";
 
 describe('Тестируем Роутер', function() {
   before('Создаем Роутер', function() {
-    Router.getInstance()
+    Router.getInstance().init();
   });
 
   describe('Router find route', function() {

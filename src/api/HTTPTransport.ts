@@ -56,7 +56,6 @@ export default class HTTPTransport {
    * @return {XMLHttpRequest}
    */
   post = (url: string, options: IhttpTransportOptions) => {
-    console.log(options)
     return this._request(url, {
       ...options,
       method: METHODS.POST,

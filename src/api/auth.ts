@@ -41,16 +41,12 @@ export function signup(data : Isignup) {
 export function userInfo() {
   return authApi().get(AUTH_SUBPATH.USER, {})
       .then((res) => {
-        console.log('userInfo');
-        console.log(res);
         if (res.status !== 200) {
           throw new Error(res.status);
         }
         return {status: res.status, response: JSON.parse(res.response)};
       })
       .catch((err) => {
-        console.log('userInfo');
-        console.log(err);
         return err
       })
 }
@@ -64,8 +60,6 @@ export function login(data : Ilogin) {
   const options : IhttpTransportOptions = prepareData(data, TYPES.JSON)
   return authApi().post(AUTH_SUBPATH.SIGNIN, options)
       .then((res) => {
-        console.log('login');
-        console.log(res);
         return res.responseText
       })
       .catch((err) => {

@@ -38,7 +38,6 @@ export default class Router {
   public async findRoute() {
     /** Если пользователь не авторизован - кидаем на Login */
     const auth = await Auth.getInstance().auth();
-    // console.log('auth', auth);
     /** Редиректим закрытые вкладки на Login */
     if (!auth && !(NOT_AUTH_ROUTES.find((el) => el === location.pathname))) {
       this.redirect(LOGIN_ROUTE);
