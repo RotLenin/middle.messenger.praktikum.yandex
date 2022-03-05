@@ -5,7 +5,6 @@ import IrouterInit from '../types/interface/IrouterInit';
 /**
  *  Трудно заставить parcel вечно смотреть на index.html
  *  Так что будем ходить по get параметрам
- *  TODO: Возможно есть смысл перейти на жэш роутер
  *  */
 export default class Router {
   private _route : Iroute;

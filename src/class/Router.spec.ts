@@ -1,6 +1,5 @@
 import Router from "./Router";
 import Auth from "./Auth";
-import { expect } from "chai";
 
 import IrouterInit from "../types/interface/IrouterInit";
 
@@ -48,6 +47,7 @@ describe('Тестируем Роутер', function() {
 * На отличный от about:blanc (именно в location)
 * Текущая ошибка
 * SecurityError: Could not parse url argument "/login" to pushState against base URL "about:blank".
+* Без работы с window не вижу смысла тестить Router =)
 * */
   it('Тестируем редирект', async function (){
     return true;
