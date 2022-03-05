@@ -1,9 +1,6 @@
 import Auth from './Auth';
-// import {queryStringify} from '../utils/queryString';
-
 import Iroute from '../types/interface/Iroute';
-
-import {ROUTES, DEFAULT_ROUTE, LOGIN_ROUTE, NOT_AUTH_ROUTES, ERROR_ROUTE} from '../constants/routes';
+import IrouterInit from '../types/interface/IrouterInit';
 
 /**
  *  Трудно заставить parcel вечно смотреть на index.html
@@ -11,7 +8,14 @@ import {ROUTES, DEFAULT_ROUTE, LOGIN_ROUTE, NOT_AUTH_ROUTES, ERROR_ROUTE} from '
  *  TODO: Возможно есть смысл перейти на жэш роутер
  *  */
 export default class Router {
-  private _route: Iroute;
+  private _route : Iroute;
+
+  private _routes : Iroute[];
+  private _defaultRoute : Iroute;
+  private _loginRoute : string;
+  private _noAuthRoute : string[];
+  private _errorRoute: Iroute;
+
   private static instance: Router;
 
   /** getInstance
@@ -28,7 +32,13 @@ export default class Router {
   /** init
    *  @description Вешаем наш роутер на window
    */
-  public init() {
+  public init({routes, defaultRoute, loginRoute, noAuthRoute, errorRoute} : IrouterInit) {
+    this._routes = routes;
+    this._defaultRoute = defaultRoute;
+    this._loginRoute = loginRoute;
+    this._noAuthRoute = noAuthRoute;
+    this._errorRoute = errorRoute;
+
     window.onpopstate = this.findRoute.bind(this);
   }
 
@@ -39,12 +49,12 @@ export default class Router {
     /** Если пользователь не авторизован - кидаем на Login */
     const auth = await Auth.getInstance().auth();
     /** Редиректим закрытые вкладки на Login */
-    if (!auth && !(NOT_AUTH_ROUTES.find((el) => el === location.pathname))) {
-      this.redirect(LOGIN_ROUTE);
+    if (!auth && !(this._noAuthRoute.find((el) => el === location.pathname))) {
+      this.redirect(this._loginRoute);
     }
     /** обрабатываем пустые запросы как стандартный роут Login */
     if (location.pathname === '' || location.pathname === '/') {
-      this._route = DEFAULT_ROUTE;
+      this._route = this._defaultRoute;
       this._runMethod([]);
       return;
     }
@@ -53,19 +63,20 @@ export default class Router {
     const path: string | null = location.pathname;
     /** Если нет пути - то идем на стандартный Роут */
     if (!path) {
-      this._route = DEFAULT_ROUTE;
+      this._route = this._defaultRoute;
       this._runMethod([]);
       return;
     }
     /** Обходим наши проверки */
     // @ts-ignore
-    this._route = ROUTES.find(
+    this._route = this._routes.find(
         // @ts-ignore
         (route) => path.match(this._createRegExp(route.match))
     );
     if (!this._route) {
-      this._route = ERROR_ROUTE;
+      this._route = this._errorRoute;
       this._runMethod([]);
+      return;
     }
 
     this._runMethod(this._getMatches(path));
@@ -120,8 +131,15 @@ export default class Router {
     history.pushState(
         {},
         '',
-        location.origin + path
+        path
     );
     this.findRoute();
+  }
+
+  /** getCurrentRoute
+   *  @return {Iroute}
+   */
+  public getCurrentRoute() : Iroute{
+    return this._route;
   }
 }

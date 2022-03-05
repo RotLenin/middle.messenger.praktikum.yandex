@@ -1,8 +1,7 @@
 import Stash, {STASH_ENUM} from './Stash';
-import {userInfo} from '../api/auth';
 import Router from './Router';
 
-import {LOGIN_ROUTE} from '../constants/routes';
+import {userInfo} from '../api/auth';
 
 /** Auth
  *  @description отвечает за login и регистрацию
@@ -11,6 +10,7 @@ export default class Auth {
   private static instance: Auth;
   /** Авторизован ли пользователь */
   private _status = false;
+  private _loginPath : string;
 
   /** getInstance
    *  Получаем экземпляр singleton
@@ -21,6 +21,10 @@ export default class Auth {
       Auth.instance = new Auth();
     }
     return Auth.instance;
+  }
+
+  public init(loginPath : string){
+    this._loginPath = loginPath;
   }
 
   /** auth
@@ -47,7 +51,7 @@ export default class Auth {
   public checkout() {
     Stash.getInstance().clearState();
     this._status = false;
-    Router.getInstance().redirect(LOGIN_ROUTE);
+    Router.getInstance().redirect(this._loginPath);
   }
 
   /** checkUser
