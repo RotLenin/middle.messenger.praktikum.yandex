@@ -1,10 +1,6 @@
 include ../dropDownMenu/dropDownMenu
 
 mixin dotMenu()
-    style
-        include dotMenu.css
     .dot-menu__wrapper
         .dot-menu
-            - var list = requireData('dotDropdown.js')
-            +dropDownMenu(list)(class='dot-menu__dropdown hidden')
-    script(type="module", src="../handlers/dotMenuHandler.js")
+            +dropDownMenu(dotDropdown)(class='dot-menu__dropdown hidden')

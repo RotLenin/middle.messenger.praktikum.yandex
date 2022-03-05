@@ -1,0 +1,20 @@
+extends ../template/form/form
+
+include ../components/acceptBtn/acceptBtn
+include ../components/SPALink/SPALink
+include ../components/formInput/formInput
+
+block formTitle
+  span.text_main.form-title= title
+
+block inputs
+  each item in inputs
+    +formInput(item.name, item.label, item.placeholder, item.type, item.errorText)
+
+block buttons
+  .form-action__wrapper
+    +button(accept)
+  .form-action__wrapper
+    +SPALink(second.title, second.path)
+  .form-action__wrapper
+    .form-action__error.text_danger= ''

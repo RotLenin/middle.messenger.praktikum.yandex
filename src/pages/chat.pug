@@ -1,8 +1,9 @@
 extends ../template/chat/chat
-
-block variables
-    -
-        var title = 'чат'
+include ../components/chatBody/chatBody
 
 block body
-    .chat__clear.text_second= "Выберите чат чтобы отправить сообщение"
+    case state
+      when 'main'
+        .chat__clear.text_second= "Выберите чат чтобы отправить сообщение"
+      when 'selected'
+        +chatBody(selectedChat, messages)

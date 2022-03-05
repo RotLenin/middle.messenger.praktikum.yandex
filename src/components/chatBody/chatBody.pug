@@ -3,8 +3,6 @@ include chatBodySender
 include chatBodyMessages
 
 mixin chatBody(chat, messages)
-    style
-        include chatBody.css
     .chat-body
         +chatBodyHeader(chat)
         +chatBodyMessages(messages)

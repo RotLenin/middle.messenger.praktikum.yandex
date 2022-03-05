@@ -1,0 +1,81 @@
+@import "normalize.css";
+
+@font-face {
+  font-family: Inter, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  src: local("Inter"), url("../font/Inter/Inter-Medium.ttf") format("truetype");
+}
+
+textarea,
+input { outline: none; }
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+}
+
+.text_main,
+.text_second,
+.text_info,
+.text_danger,
+.text_white {
+  font-family: Inter, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 13px;
+}
+
+.bg_main {
+  background-color: #fff;
+}
+
+.bg_second {
+  background-color: #fbfbfb;
+}
+
+.bg_bright {
+  background-color: #efefef;
+}
+
+.text_main {
+  color: #1e1e1e;
+}
+
+.text_second {
+  color: #999;
+}
+
+.text_white {
+  color: #fff;
+}
+
+.text_info {
+  color: #3369f3;
+}
+
+.text_danger {
+  color: #f00;
+}
+
+.bd-top {
+  border-top: 1px solid #eaeaea;
+}
+
+.bd-bottom {
+  border-bottom: 1px solid #eaeaea;
+}
+
+.no_decoration {
+  text-decoration: none;
+}
+
+.hidden {
+  display: none !important;
+}
