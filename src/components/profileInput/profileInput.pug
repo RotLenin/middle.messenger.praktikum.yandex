@@ -2,5 +2,7 @@ mixin profileInput(item)
     div.profile-input.bd-bottom
         .profile-input__label__wrapper
             label.profile-input-label.text_main= item.label
-        .profile-input-label__input-wrapper
+        .profile-input__input-wrapper
             input(name=item.name type=item.type value=item.value).profile-input__input.text_second
+    .profile-input__error.input-error(name=item.name data-error=item.errorText).text_danger= ''
+

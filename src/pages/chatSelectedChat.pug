@@ -1,12 +1,5 @@
 extends ../template/chat/chat
 include ../components/chatBody/chatBody
 
-block variables
-    -
-        var title = 'чат с пользователем'
-
 block body
-    -
-        var chats = requireData('chats.js')
-        var messages = requireData('messages.js')
     +chatBody(chats[0], messages)

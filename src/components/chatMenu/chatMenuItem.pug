@@ -1,5 +1,5 @@
 mixin chatMenuItem(item)
-    a(href='chatSelectedChat.pug').chat-menu-item.no_decoration
+    a(data-path= item.path).chat-menu-item.no_decoration
         .chat-menu-item__avatar-wrapper.bg_bright
             img(src=item.img).chat-menu-item__avatar
         .chat-menu-item__message-wrapper
@@ -12,5 +12,5 @@ mixin chatMenuItem(item)
                         span.text_main= 'Вы:'
                     span.text_second= item.lastMessage.message
                 .chat-menu-item__notification-wrapper
-                    if item.notification !== null
+                    if item.notification !== 0
                         .chat-menu-item__notification.text_white= item.notification

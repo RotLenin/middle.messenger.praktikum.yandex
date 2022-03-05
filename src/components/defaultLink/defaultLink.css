@@ -1,5 +1,6 @@
-.default-link{
-    display: block;
-    text-decoration: none;
-    text-align: center;
+.default-link {
+  display: block;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
 }
