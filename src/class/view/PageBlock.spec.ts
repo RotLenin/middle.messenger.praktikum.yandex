@@ -21,7 +21,6 @@ describe('Тестируем Block', function() {
       block.render();
       return true;
     } catch (err) {
-      console.log(err);
       return false;
     }
   });

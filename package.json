@@ -8,7 +8,8 @@
     "eslint": "eslint 'src/**/*.ts'",
     "eslintFix": "eslint --fix 'src/**/*.ts'",
     "test": "mocha",
-    "start": "node index.ts",
+    "start": "parcel build src/index.html && node index.ts",
+    "startAfterBuild": "node index.ts",
     "dev": "parcel src/index.html --no-cache",
     "build": "parcel build src/index.html"
   },
