@@ -1,19 +1,19 @@
 import Auth from './Auth';
-import Iroute from '../types/interface/Iroute';
-import IrouterInit from '../types/interface/IrouterInit';
+import IRoute from '../types/interface/IRoute';
+import IRouterInit from '../types/interface/IRouterInit';
 
 /**
  *  Трудно заставить parcel вечно смотреть на index.html
  *  Так что будем ходить по get параметрам
  *  */
 export default class Router {
-  private _route : Iroute;
+  private _route : IRoute;
 
-  private _routes : Iroute[];
-  private _defaultRoute : Iroute;
+  private _routes : IRoute[];
+  private _defaultRoute : IRoute;
   private _loginRoute : string;
   private _noAuthRoute : string[];
-  private _errorRoute: Iroute;
+  private _errorRoute: IRoute;
 
   private static instance: Router;
 
@@ -31,7 +31,7 @@ export default class Router {
   /** init
    *  @description Вешаем наш роутер на window
    */
-  public init({routes, defaultRoute, loginRoute, noAuthRoute, errorRoute} : IrouterInit) {
+  public init({routes, defaultRoute, loginRoute, noAuthRoute, errorRoute} : IRouterInit) {
     this._routes = routes;
     this._defaultRoute = defaultRoute;
     this._loginRoute = loginRoute;
@@ -136,9 +136,9 @@ export default class Router {
   }
 
   /** getCurrentRoute
-   *  @return {Iroute}
+   *  @return {IRoute}
    */
-  public getCurrentRoute() : Iroute{
+  public getCurrentRoute() : IRoute{
     return this._route;
   }
 }

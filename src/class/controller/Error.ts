@@ -2,7 +2,7 @@ import DefaultController from './DefaultController';
 import ErrorTemplate from '../view/Error';
 import StaticModel from '../model/StaticModel';
 
-export enum ERROR_METHODS {
+export enum ErrorMethods {
   ERROR_404 = 'error404',
   ERROR_500 = 'error500',
 }
@@ -38,8 +38,8 @@ export default class ErrorController extends DefaultController {
   async error404() {
     const locals = await StaticModel.getError()
         .then((res : Record<string, any>) => res.ERROR_404);
-    const error = await this._renderTemplate(locals)
-    if (!this._mountTemplate(error)) {
+    const error = await this.renderTemplate(locals)
+    if (!this.mountTemplate(error)) {
       throw new Error('Can\'t mount template');
     }
     this.setLastTemplate();
@@ -51,8 +51,8 @@ export default class ErrorController extends DefaultController {
   async error500() {
     const locals = await StaticModel.getError()
         .then((res : Record<string, any>) => res.ERROR_500);
-    const error = await this._renderTemplate(locals)
-    if (!this._mountTemplate(error)) {
+    const error = await this.renderTemplate(locals)
+    if (!this.mountTemplate(error)) {
       throw new Error('Can\'t mount template');
     }
     this.setLastTemplate();

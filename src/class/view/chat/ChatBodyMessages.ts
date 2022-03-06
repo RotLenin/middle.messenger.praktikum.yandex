@@ -1,9 +1,9 @@
-import Stash, {STASH_ENUM} from '../../Stash';
+import Stash, {StashEnum} from '../../Stash';
 import Block from '../Block';
 
-import Iblock from '../../../types/interface/Iblock';
-import Imessage from '../../../types/interface/Imessage';
-import Iuser from '../../../types/interface/Iuser';
+import IBlock from '../../../types/interface/IBlock';
+import IMessage from '../../../types/interface/IMessage';
+import IUser from '../../../types/interface/IUser';
 
 import {formaDate} from '../../../utils/dateHelper';
 
@@ -15,8 +15,8 @@ import '../../../components/newChatBody/chatBodyMessages.css';
 /** ChatBodyMessages
  *
  */
-export default class ChatBodyMessages extends Block<Iblock> {
-  private _messages : Imessage[];
+export default class ChatBodyMessages extends Block<IBlock> {
+  private _messages : IMessage[];
   private _wrapper : HTMLElement;
 
   /** constructor
@@ -38,12 +38,12 @@ export default class ChatBodyMessages extends Block<Iblock> {
 
   /** chatBodyMessage
    * @description
-   * @param {Imessage} message
-   * @param {Iuser} user
+   * @param {IMessage} message
+   * @param {IUser} user
    * @throw {Error}
    * @return {HTMLElement}
    */
-  chatBodyMessage(message : Imessage, user : Iuser) : HTMLElement {
+  chatBodyMessage(message : IMessage, user : IUser) : HTMLElement {
     console.log('chatBodyMessage');
     const div = document.createElement('div');
 
@@ -68,7 +68,7 @@ export default class ChatBodyMessages extends Block<Iblock> {
    */
   render() {
     const {template, locals} = this._meta.props;
-    const user = Stash.getInstance().getState(STASH_ENUM.USER);
+    const user = Stash.getInstance().getState(StashEnum.USER);
     this._messages = Stash.getInstance().getMessagesByChatId(locals.id);
     Stash.getInstance().setConsumerByChatId(locals.id, this);
 
@@ -99,7 +99,7 @@ export default class ChatBodyMessages extends Block<Iblock> {
    */
   update() {
     const {locals} = this._meta.props;
-    const user = Stash.getInstance().getState(STASH_ENUM.USER);
+    const user = Stash.getInstance().getState(StashEnum.USER);
     this._messages = Stash.getInstance().getMessagesByChatId(locals.id);
 
     this._wrapper.innerHTML = '';

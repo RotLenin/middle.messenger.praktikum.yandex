@@ -1,10 +1,10 @@
 import HTTPTransport from './HTTPTransport'
-import {prepareData, TYPES} from '../utils/TransportData';
-import IhttpTransportOptions from '../types/interface/IhttpTransportOptions';
+import {prepareData, Types} from '../utils/TransportData';
+import IHttpTransportOptions from '../types/interface/IHttpTransportOptions';
 
 const CHATS_PATH = '/chats';
 
-enum CHATS_SUBPATH {
+enum ChatsSubpath {
   GET_CHATS = '',
   CREATE_CHAT = '',
   DELETE_CHAT = '',
@@ -21,14 +21,14 @@ enum CHATS_SUBPATH {
  * @return {response}
  */
 export function getChats(offset = 0, limit = 20, title = '') {
-  const options : IhttpTransportOptions = {
+  const options : IHttpTransportOptions = {
     data: {
       offset: offset,
       limit: limit,
       title: title,
     },
   };
-  return chatsApi().get(CHATS_SUBPATH.GET_CHATS, options)
+  return chatsApi().get(ChatsSubpath.GET_CHATS, options)
       .then((res) => {
         return {status: res.status, response: res.response}
       })
@@ -43,11 +43,11 @@ export function getChats(offset = 0, limit = 20, title = '') {
  * @return {response}
  */
 export function createChats(title : string) {
-  const options : IhttpTransportOptions = prepareData(
+  const options : IHttpTransportOptions = prepareData(
       {title: title},
-      TYPES.JSON
+      Types.JSON
   );
-  return chatsApi().post(CHATS_SUBPATH.CREATE_CHAT, options)
+  return chatsApi().post(ChatsSubpath.CREATE_CHAT, options)
       .then((res) => {
         return {status: res.status, response: res.response}
       })
@@ -63,14 +63,14 @@ export function createChats(title : string) {
  * @return {response}
  */
 export function addUserToChat(chatId : number, users : number[]) {
-  const options : IhttpTransportOptions = prepareData(
+  const options : IHttpTransportOptions = prepareData(
       {
         users: users,
         chatId: chatId,
       },
-      TYPES.JSON
+      Types.JSON
   );
-  return chatsApi().put(CHATS_SUBPATH.CHAT_ADD_USER, options)
+  return chatsApi().put(ChatsSubpath.CHAT_ADD_USER, options)
       .then((res) => {
         console.log(res);
         return {status: res.status, response: res.response}
@@ -86,8 +86,8 @@ export function addUserToChat(chatId : number, users : number[]) {
  * @return {response}
  */
 export function getChatToken(chatId : number) {
-  const options : IhttpTransportOptions = {};
-  const url = CHATS_SUBPATH.CHAT_TOKEN + '/' + chatId;
+  const options : IHttpTransportOptions = {};
+  const url = ChatsSubpath.CHAT_TOKEN + '/' + chatId;
 
   return chatsApi().post(url, options)
       .then((res) => {
@@ -105,14 +105,14 @@ export function getChatToken(chatId : number) {
  * @return {response}
  */
 export function deleteUserFromChat(chatId : number, users : number[]) {
-  const options : IhttpTransportOptions = prepareData(
+  const options : IHttpTransportOptions = prepareData(
       {
         users: users,
         chatId: chatId,
       },
-      TYPES.JSON
+      Types.JSON
   );
-  return chatsApi().delete(CHATS_SUBPATH.CHAT_DELETE_USER, options)
+  return chatsApi().delete(ChatsSubpath.CHAT_DELETE_USER, options)
       .then((res) => {
         return {status: res.status, response: res.response}
       })
@@ -127,13 +127,13 @@ export function deleteUserFromChat(chatId : number, users : number[]) {
  * @return {response}
  */
 export function deleteChat(chatId : number) {
-  const options : IhttpTransportOptions = prepareData(
+  const options : IHttpTransportOptions = prepareData(
       {
         chatId: chatId,
       },
-      TYPES.JSON
+      Types.JSON
   );
-  return chatsApi().delete(CHATS_SUBPATH.DELETE_CHAT, options)
+  return chatsApi().delete(ChatsSubpath.DELETE_CHAT, options)
       .then((res) => {
         console.log(res);
         return {status: res.status, response: res.response}

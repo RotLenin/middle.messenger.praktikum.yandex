@@ -1,14 +1,14 @@
 import HTTPTransport from './HTTPTransport'
 
-import Isignup from '../types/interface/Isignup';
-import Ilogin from '../types/interface/Ilogin';
-import IhttpTransportOptions from '../types/interface/IhttpTransportOptions';
+import ISignup from '../types/interface/ISignup';
+import ILogin from '../types/interface/ILogin';
+import IHttpTransportOptions from '../types/interface/IHttpTransportOptions';
 
-import {prepareData, TYPES} from '../utils/TransportData';
+import {prepareData, Types} from '../utils/TransportData';
 
 const AUTH_PATH = '/auth/'
 
-enum AUTH_SUBPATH {
+enum AuthSubpath {
   SIGNUP = 'signup',
   SIGNIN = 'signin',
   USER = 'user',
@@ -17,13 +17,13 @@ enum AUTH_SUBPATH {
 
 /** signup
  *  Создать пользователя
- *  @param {Isignup} data
+ *  @param {ISignup} data
  *  @return {response}
  */
-export function signup(data : Isignup) {
-  const options : IhttpTransportOptions = prepareData(data, TYPES.JSON)
+export function signup(data : ISignup) {
+  const options : IHttpTransportOptions = prepareData(data, Types.JSON)
   console.log('signup');
-  return authApi().post(AUTH_SUBPATH.SIGNUP, options)
+  return authApi().post(AuthSubpath.SIGNUP, options)
       .then((res) => {
         console.log(res);
         return JSON.parse(res.responseText);
@@ -39,7 +39,7 @@ export function signup(data : Isignup) {
  * @return {response}
  */
 export function userInfo() {
-  return authApi().get(AUTH_SUBPATH.USER, {})
+  return authApi().get(AuthSubpath.USER, {})
       .then((res) => {
         if (res.status !== 200) {
           throw new Error(res.status);
@@ -53,12 +53,12 @@ export function userInfo() {
 
 /** login
  * Авторизация
- * @param {Ilogin} data
+ * @param {ILogin} data
  * @return {response}
  */
-export function login(data : Ilogin) {
-  const options : IhttpTransportOptions = prepareData(data, TYPES.JSON)
-  return authApi().post(AUTH_SUBPATH.SIGNIN, options)
+export function login(data : ILogin) {
+  const options : IHttpTransportOptions = prepareData(data, Types.JSON)
+  return authApi().post(AuthSubpath.SIGNIN, options)
       .then((res) => {
         return res.responseText
       })
@@ -72,7 +72,7 @@ export function login(data : Ilogin) {
  * @return {response}
  */
 export function logout() {
-  return authApi().post(AUTH_SUBPATH.LOGOUT, {})
+  return authApi().post(AuthSubpath.LOGOUT, {})
 }
 
 /** authApi

@@ -1,4 +1,4 @@
-import Stash, {STASH_ENUM} from './Stash';
+import Stash, {StashEnum} from './Stash';
 import Router from './Router';
 
 import {userInfo} from '../api/auth';
@@ -35,7 +35,7 @@ export default class Auth {
       const res = await this.checkUser();
       if (res.status === 200) {
         this._status = true;
-        Stash.getInstance().setState(STASH_ENUM.USER, res.response);
+        Stash.getInstance().setState(StashEnum.USER, res.response);
         return true;
       } else {
         this._status = false;

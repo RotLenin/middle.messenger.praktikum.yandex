@@ -1,4 +1,4 @@
-export default interface Idropdown {
+export default interface IDropdown {
   id : string,
   icon : string,
   name : string,

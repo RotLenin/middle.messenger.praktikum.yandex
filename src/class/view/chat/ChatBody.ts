@@ -4,7 +4,7 @@ import ChatBodyHeader from './ChatBodyHeader';
 import ChatBodyMessages from './ChatBodyMessages';
 import ChatBodySender from './ChatBodySender';
 
-import Iblock from '../../../types/interface/Iblock';
+import IBlock from '../../../types/interface/IBlock';
 
 import compileChatBody from '../../../components/newChatBody/chatBody.pug';
 import compileClearChatBody from '../../../components/newChatBody/clearChatBody.pug';
@@ -14,7 +14,7 @@ import '../../../components/chatBody/chatBody.css';
 /** ChatBody
  *
  */
-export default class ChatBody extends Block<Iblock> {
+export default class ChatBody extends Block<IBlock> {
   private _body : Record<string, any>;
   private _bodyHeader : null | ChatBodyHeader;
   private _bodyMessages : null | ChatBodyMessages;

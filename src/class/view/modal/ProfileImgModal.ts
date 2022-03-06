@@ -2,7 +2,7 @@ import Modal from '../Modal';
 
 import '../../../components/acceptBtn/acceptBtn.css'
 import '../../../components/customFileUploader/customFileUploader.css'
-import IpageBlock from '../../../types/interface/IpageBlock';
+import IPageBlock from '../../../types/interface/IPageBlock';
 import compileProfileImgModal from './profileImgModal.pug';
 
 /** Chat
@@ -12,7 +12,7 @@ export default class ProfileImgModal extends Modal {
   /**
    * @param {object} locals
    */
-  constructor(locals : IpageBlock) {
+  constructor(locals : IPageBlock) {
     locals.template = compileProfileImgModal;
     console.log('ProfileImgModal');
     console.log(locals);

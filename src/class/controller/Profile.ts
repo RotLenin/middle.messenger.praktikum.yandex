@@ -1,4 +1,4 @@
-import Stash, {STASH_ENUM} from '../Stash';
+import Stash, {StashEnum} from '../Stash';
 import Router from '../Router';
 import Modal from '../Modal';
 import Auth from '../Auth';
@@ -7,9 +7,9 @@ import ProfileTemplate from '../view/Profile';
 import ProfileImgModal from '../view/modal/ProfileImgModal';
 import StaticModel from '../model/StaticModel';
 
-import Ivalidate from '../../types/interface/Ivalidate';
-import Iuser from '../../types/interface/Iuser';
-import IuserChangePassword from '../../types/interface/IuserChangePassword';
+import IValidate from '../../types/interface/IValidate';
+import IUser from '../../types/interface/IUser';
+import IUserChangePassword from '../../types/interface/IUserChangePassword';
 
 import {logout} from '../../api/auth';
 import {changeProfile, changePassword, uploadProfileImg} from '../../api/users';
@@ -19,7 +19,7 @@ import {resourseLink} from '../../utils/resourseLink';
 
 import * as ROUTES from '../../constants/routes';
 
-export enum PROFILE_METHODS {
+export enum ProfileMethods {
   PROFILE = 'profile',
   PASSWORD = 'password',
   CHANGE = 'change',
@@ -65,13 +65,13 @@ export default class Profile extends DefaultController {
    * Получаем данные для шаблона profile, выставляем обработчики
    */
   async profile() {
-    const user = Stash.getInstance().getState(STASH_ENUM.USER);
+    const user = Stash.getInstance().getState(StashEnum.USER);
     const locals = await StaticModel.getProfileLocals()
         .then((res : Record<string, any>) => res.default.profile)
     locals.locals.profile = this._setValueFromStash(locals.locals.profile, user);
     locals.locals.avatar = user?.avatar ? resourseLink(user.avatar) : null;
-    const profile = await this._renderTemplate(locals)
-    if (!this._mountTemplate(profile)) {
+    const profile = await this.renderTemplate(locals)
+    if (!this.mountTemplate(profile)) {
       throw new Error('Can\'t mount template');
     }
 
@@ -86,18 +86,18 @@ export default class Profile extends DefaultController {
    * Получаем данные для шаблона profile, выставляем обработчики
    */
   async password() {
-    const user = Stash.getInstance().getState(STASH_ENUM.USER);
+    const user = Stash.getInstance().getState(StashEnum.USER);
     const locals = await StaticModel.getProfileLocals()
         .then((res : Record<string, any>) => res.default.password)
     locals.locals.avatar = user?.avatar ? resourseLink(user.avatar) : null;
-    const profile = await this._renderTemplate(locals)
+    const profile = await this.renderTemplate(locals)
 
-    if (!this._mountTemplate(profile)) {
+    if (!this.mountTemplate(profile)) {
       throw new Error('Can\'t mount template');
     }
 
     this._setBody();
-    this._setInputValidation(this._body);
+    this.setInputValidation(this._body);
     this._setPasswordAction()
     this.initSPALinks();
 
@@ -108,19 +108,19 @@ export default class Profile extends DefaultController {
    * Получаем данные для шаблона profile, выставляем обработчики
    */
   async change() {
-    const user = Stash.getInstance().getState(STASH_ENUM.USER);
+    const user = Stash.getInstance().getState(StashEnum.USER);
     const locals = await StaticModel.getProfileLocals()
         .then((res : Record<string, any>) => res.default.change)
     locals.locals.profile = this._setValueFromStash(locals.locals.profile, user);
     locals.locals.avatar = user?.avatar ? resourseLink(user.avatar) : null;
-    const profile = await this._renderTemplate(locals)
+    const profile = await this.renderTemplate(locals)
 
-    if (!this._mountTemplate(profile)) {
+    if (!this.mountTemplate(profile)) {
       throw new Error('Can\'t mount template');
     }
 
     this._setBody()
-    this._setInputValidation(this._body)
+    this.setInputValidation(this._body)
     this._setChangeAction()
     this.initSPALinks()
 
@@ -174,13 +174,13 @@ export default class Profile extends DefaultController {
    *  @throws {string}
    */
   public _changeAction() {
-    this._validate(this._body)
-        .then(async (res : Ivalidate) => {
+    this.validate(this._body)
+        .then(async (res : IValidate) => {
           if (res.status) {
-            const user = <Iuser> res.data;
+            const user = <IUser> res.data;
             const queryRes = await changeProfile(user);
             if (queryRes.status === 200) {
-              Stash.getInstance().setState(STASH_ENUM.USER, res.data);
+              Stash.getInstance().setState(StashEnum.USER, res.data);
               Router.getInstance().redirect(ROUTES.PROFILE_ROUTE);
               return true;
             }
@@ -211,8 +211,8 @@ export default class Profile extends DefaultController {
    *  @throws {string}
    */
   _passwordAction() {
-    this._validate(this._body)
-        .then(async (res : Ivalidate) => {
+    this.validate(this._body)
+        .then(async (res : IValidate) => {
           if (res.status) {
             const {oldPassword, newPassword, reNewPassword} = res.data;
 
@@ -236,7 +236,7 @@ export default class Profile extends DefaultController {
               return true;
             }
 
-            const userChangePassword : IuserChangePassword = {
+            const userChangePassword : IUserChangePassword = {
               oldPassword: oldPassword,
               newPassword: newPassword,
             }
@@ -396,7 +396,7 @@ export default class Profile extends DefaultController {
     const uploadRes = await uploadProfileImg({avatar: input.files[0]});
 
     if (uploadRes.status === 200) {
-      Stash.getInstance().setState(STASH_ENUM.USER, JSON.parse(uploadRes.response))
+      Stash.getInstance().setState(StashEnum.USER, JSON.parse(uploadRes.response))
     }
   }
 

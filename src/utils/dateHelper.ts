@@ -1,4 +1,4 @@
-enum DAYS {
+enum Days {
   'Вс',
   'Пн',
   'Вт',
@@ -8,7 +8,7 @@ enum DAYS {
   'Сб'
 }
 /*
-enum MONTHS {
+enum Months {
   'Января',
   'Февраля',
   'Марта',
@@ -40,7 +40,7 @@ function createDate(time : string) : Date {
  * @return {string}
  */
 function getDayOfWeek(date : Date) {
-  return DAYS[date.getDay()];
+  return Days[date.getDay()];
 }
 
 /** getTime
@@ -62,7 +62,7 @@ function getTime(date : Date) : string {
  * @return {string}
  */
 function getMonth(date : Date) : string {
-  return DAYS[date.getMonth()];
+  return Days[date.getMonth()];
 }
 
 /** formatFullDate

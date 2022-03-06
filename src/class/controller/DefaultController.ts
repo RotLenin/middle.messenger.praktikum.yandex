@@ -1,7 +1,7 @@
 import Stash from '../Stash';
 
-import Ilocals from '../../types/interface/Ilocals';
-import Ivalidate from '../../types/interface/Ivalidate';
+import ILocals from '../../types/interface/ILocals';
+import IValidate from '../../types/interface/IValidate';
 
 import {initAllSPALink} from '../../utils/SPALink';
 import {nodeListforEach} from '../../utils/nodeListHelper';
@@ -24,21 +24,21 @@ export default abstract class DefaultController {
     initAllSPALink();
   }
 
-  /** _renderTemplate
+  /** renderTemplate
    * Рендерим pug шаблон с полученными locals
-   * @param {Ilocals} locals
+   * @param {ILocals} locals
    * @return {string}
    */
-  public _renderTemplate(locals : Ilocals) {
+  public renderTemplate(locals : ILocals) {
     return new this._template(locals).render();
   }
 
-  /** _mountTemplate
+  /** mountTemplate
    * Монтируем сгенерированный HTML в root block
    * @param {string }renderedTemplate
    * @return {boolean}
    */
-  public _mountTemplate(renderedTemplate : string) {
+  public mountTemplate(renderedTemplate : string) {
     if (!this._root) {
       throw new Error('Undefined Root element');
     }
@@ -46,11 +46,11 @@ export default abstract class DefaultController {
     return true;
   }
 
-  /** _mountTemplateAsHTMLElement
+  /** mountTemplateAsHTMLElement
    * @description Вставляем отрендаренный шаблон как HTML в root элемент
    * @param {Element} renderedTemplate
    */
-  public _mountTemplateAsHTMLElement(renderedTemplate : Element) {
+  public mountTemplateAsHTMLElement(renderedTemplate : Element) {
     if (!this._root) {
       throw new Error('Undefined Root element');
     }
@@ -59,11 +59,11 @@ export default abstract class DefaultController {
     this._root.appendChild(renderedTemplate);
   }
 
-  /** _setInputValidation
+  /** setInputValidation
    * Выставляет валидатор формы на все input form блока
    * @param {HTMLElement} form
    */
-  public _setInputValidation(form : Element) {
+  public setInputValidation(form : Element) {
     nodeListforEach(form.querySelectorAll('input'), (el) => {
       el.addEventListener('focus', validationField);
       el.addEventListener('blur', validationField);
@@ -85,13 +85,13 @@ export default abstract class DefaultController {
         })
   }
 
-  /** _validate
+  /** validate
    * Проверяет все inputs формы перед отправкой
    * @param {Element} form
    * @return {object}
    */
-  _validate(form : Element) {
-    return new Promise((resolve : (res : Ivalidate) => void, reject) => {
+  validate(form : Element) {
+    return new Promise((resolve : (res : IValidate) => void, reject) => {
       if (form instanceof HTMLElement) {
         const inputs = form.querySelectorAll('input');
         const {errors, data} = validationForm(inputs);

@@ -1,10 +1,10 @@
-import IinputWithError from '../types/interface/IinputWithError';
-import Ilocals from '../types/interface/Ilocals';
+import IInputWithError from '../types/interface/IInputWithError';
+import ILocals from '../types/interface/ILocals';
 import ISPALink from '../types/interface/ISPALink';
 
 import {SIGNUP_ROUTE} from './routes';
 
-const inputs: IinputWithError[] = [
+const inputs: IInputWithError[] = [
   {
     name: 'login',
     label: 'Логин',
@@ -23,7 +23,7 @@ const inputs: IinputWithError[] = [
 
 const second: ISPALink = {title: 'Нет аккаунта ?', path: SIGNUP_ROUTE};
 
-const login: Ilocals = {
+const login: ILocals = {
   headers: {
     title: 'Логин',
   },

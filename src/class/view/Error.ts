@@ -1,5 +1,5 @@
 import PageBlock from './PageBlock';
-import IpageBlock from '../../types/interface/IpageBlock';
+import IPageBlock from '../../types/interface/IPageBlock';
 import compileErrorTemplate from '../../pages/error.pug';
 
 import '../../template/error/error.css';
@@ -14,7 +14,7 @@ class Error extends PageBlock {
   /**
    * @param {object} locals
    */
-  constructor(locals : IpageBlock) {
+  constructor(locals : IPageBlock) {
     locals.template = compileErrorTemplate;
     super('div', locals);
   }

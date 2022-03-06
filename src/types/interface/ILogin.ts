@@ -1,4 +1,4 @@
-export default interface Ilogin {
+export default interface ILogin {
     login : string,
     password : string
 }

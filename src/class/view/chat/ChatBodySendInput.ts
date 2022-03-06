@@ -1,5 +1,5 @@
 import Block from '../Block';
-import Iblock from '../../../types/interface/Iblock';
+import IBlock from '../../../types/interface/IBlock';
 import compileSendInput from '../../../components/sendInput/sendInput.pug';
 
 import '../../../components/sendInput/sendInput.css';
@@ -7,7 +7,7 @@ import '../../../components/sendInput/sendInput.css';
 /** ChatBodyMessages
  *
  */
-export default class ChatBodyMessages extends Block<Iblock> {
+export default class ChatBodyMessages extends Block<IBlock> {
   /** constructor
    * @param {object} locals
    */

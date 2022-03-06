@@ -1,17 +1,21 @@
+import Router from "../../Router";
 import Block from '../Block';
 import Modal from '../../Modal';
 import DropDownMenu from '../DropDownMenu';
 import InputModal from '../modal/InputModal';
 import QuestionModal from '../modal/QuestionModal';
 
-import Iblock from '../../../types/interface/Iblock';
-import Idropdown from '../../../types/interface/Idropdown';
-import Ichat from '../../../types/interface/Ichat';
+import IBlock from '../../../types/interface/IBlock';
+import IDropdown from '../../../types/interface/IDropdown';
+import IChat from '../../../types/interface/IChat';
 
 import CompiledDotMenu from '../../../components/dotMenu/dotMenu.pug';
 
 import {validationField, validationInput} from '../../../utils/inputValidation';
-import {addUserToChat, deleteUserFromChat, deleteChat} from '../../../api/chats';
+import {addUserToChat, deleteUserFromChat} from '../../../api/chats';
+import {deleteChatModel} from '../../model/ChatModel';
+
+import {CHAT_ROUTE} from "../../../constants/routes";
 
 import '../../../components/dotMenu/dotMenu.css';
 
@@ -23,11 +27,11 @@ const CUSTOM_CLASS = 'dot-menu__dropdown hidden';
 /** ChatBodyDotMenu
  *
  */
-export default class ChatBodyDotMenu extends Block<Iblock> {
+export default class ChatBodyDotMenu extends Block<IBlock> {
   private _dropDownMenu : DropDownMenu;
-  private _dotDropdown : Idropdown[];
+  private _dotDropdown : IDropdown[];
   private _modalRoot : HTMLElement | null;
-  private _selectedChat : Ichat;
+  private _selectedChat : IChat;
 
   /** constructor
    * @param {Record<string, any>} locals
@@ -96,10 +100,10 @@ export default class ChatBodyDotMenu extends Block<Iblock> {
   }
 
   /** render
-   * @param {Ichat} selectedChat
+   * @param {IChat} selectedChat
    */
   // @ts-ignore
-  render(selectedChat : Ichat) : Element {
+  render(selectedChat : IChat) : Element {
     const {template} = this._meta.props;
     const main = this.textToHtml(template({}));
 
@@ -343,10 +347,11 @@ export default class ChatBodyDotMenu extends Block<Iblock> {
       throw new Error('Unknown selected chat');
     }
 
-    const addRes = await deleteChat(this._selectedChat.id);
+    const addRes = await deleteChatModel(this._selectedChat.id);
 
-    if (addRes.status === 200) {
+    if (addRes) {
       Modal.getInstance().close();
+      Router.getInstance().redirect(CHAT_ROUTE)
       return true;
     }
     console.log(addRes);

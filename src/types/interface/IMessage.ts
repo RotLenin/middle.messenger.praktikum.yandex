@@ -1,10 +1,10 @@
-import {MESSAGE_TYPES} from '../../constants/messageTypes';
+import {MessageTypes} from '../../constants/messageTypes';
 
-export default interface Imessage{
+export default interface IMessage{
   id : number;
   user_id : number;
   chat_id? : number;
-  type : MESSAGE_TYPES;
+  type : MessageTypes;
   content : string;
   time : string;
   formatDate? : string;

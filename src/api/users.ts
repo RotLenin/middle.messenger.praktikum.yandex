@@ -1,13 +1,13 @@
 import HTTPTransport from './HTTPTransport'
-import {prepareData, TYPES} from '../utils/TransportData';
+import {prepareData, Types} from '../utils/TransportData';
 
-import Iuser from '../types/interface/Iuser';
-import IhttpTransportOptions from '../types/interface/IhttpTransportOptions';
-import IuserChangePassword from '../types/interface/IuserChangePassword';
+import IUser from '../types/interface/IUser';
+import IHttpTransportOptions from '../types/interface/IHttpTransportOptions';
+import IUserChangePassword from '../types/interface/IUserChangePassword';
 
 const USER_PATH = '/user/';
 
-enum USER_SUBPATH {
+enum UserSubpath {
   CHANGE_PROFILE = 'profile',
   CHANGE_PASSWORD = 'password',
   CHANGE_AVATAR = 'profile/avatar',
@@ -15,12 +15,12 @@ enum USER_SUBPATH {
 
 /** changeProfile
  * @description
- * @param {Iuser} data
+ * @param {IUser} data
  * @return {response}
  */
-export function changeProfile(data : Iuser) {
-  const options : IhttpTransportOptions = prepareData(data, TYPES.JSON);
-  return userApi().put(USER_SUBPATH.CHANGE_PROFILE, options)
+export function changeProfile(data : IUser) {
+  const options : IHttpTransportOptions = prepareData(data, Types.JSON);
+  return userApi().put(UserSubpath.CHANGE_PROFILE, options)
       .then((res) => {
         return {status: res.status, response: JSON.parse(res.response)}
       })
@@ -31,12 +31,12 @@ export function changeProfile(data : Iuser) {
 
 /** changePassword
  * @description Смена пароля
- * @param {IuserChangePassword} data
+ * @param {IUserChangePassword} data
  * @return {response}
  */
-export function changePassword(data : IuserChangePassword) {
-  const options : IhttpTransportOptions = prepareData(data, TYPES.JSON);
-  return userApi().put(USER_SUBPATH.CHANGE_PASSWORD, options)
+export function changePassword(data : IUserChangePassword) {
+  const options : IHttpTransportOptions = prepareData(data, Types.JSON);
+  return userApi().put(UserSubpath.CHANGE_PASSWORD, options)
       .then((res) => {
         return {status: res.status, response: res.response}
       })
@@ -51,8 +51,8 @@ export function changePassword(data : IuserChangePassword) {
  * @return {response}
  */
 export function uploadProfileImg(files : Record<string, File>) {
-  const options : IhttpTransportOptions = prepareData(files, TYPES.FORM);
-  return userApi().put(USER_SUBPATH.CHANGE_AVATAR, options)
+  const options : IHttpTransportOptions = prepareData(files, Types.FORM);
+  return userApi().put(UserSubpath.CHANGE_AVATAR, options)
       .then((res) => {
         return {status: res.status, response: res.response}
       })

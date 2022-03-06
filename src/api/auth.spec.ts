@@ -1,9 +1,9 @@
 import {login, userInfo, logout} from "./auth";
 import { expect } from "chai";
-import Iuser from "../types/interface/Iuser";
+import IUser from "../types/interface/IUser";
 
 describe('Тестируем auth Api', function() {
-  const realUser : Iuser = {
+  const realUser : IUser = {
     avatar: '/3ba579cf-6629-4990-9338-0cc7501d5889/82077cd0-e08d-42a8-be8b-f1ae15de79cb_logo512.png',
     id : 182482,
     email : 'rotlenintest6@yandex.ru',
@@ -15,7 +15,7 @@ describe('Тестируем auth Api', function() {
     password : 'P@ssw0rd123',
   };
 
-  const fakeUser : Iuser = {
+  const fakeUser : IUser = {
     avatar: null,
     id : 1111111111111111,
     email : 'aa123213213aaa@aa123213213aaa.ru',

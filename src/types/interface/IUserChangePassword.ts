@@ -1,4 +1,4 @@
-export default interface IuserChangePassword{
+export default interface IUserChangePassword{
   'oldPassword': 'string',
   'newPassword': 'string',
   'reNewPassword'? : 'string'

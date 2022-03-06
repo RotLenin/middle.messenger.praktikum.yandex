@@ -1,4 +1,4 @@
-export default interface IhttpTransportOptions {
+export default interface IHttpTransportOptions {
   data? : Record<string, any>,
   timeout? : number
   type? : string

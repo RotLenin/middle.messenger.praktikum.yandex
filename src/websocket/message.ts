@@ -1,10 +1,10 @@
 import DefaultSocket from './defaultSocket';
-import Stash, {STASH_ENUM} from '../class/Stash';
+import Stash, {StashEnum} from '../class/Stash';
 
-import Imessage from '../types/interface/Imessage';
+import IMessage from '../types/interface/IMessage';
 
-import {MESSAGE_TYPES} from '../constants/messageTypes';
-import Ichat from '../types/interface/Ichat';
+import {MessageTypes} from '../constants/messageTypes';
+import IChat from '../types/interface/IChat';
 
 const SUB_PATH = 'chats';
 const INTERVAL_TIME = 15000;
@@ -95,24 +95,24 @@ export default class MessageWS extends DefaultSocket {
     data = JSON.parse(data);
     console.log(data);
     // На пинги не реагируем
-    if (data.type === MESSAGE_TYPES.PONG) {
+    if (data.type === MessageTypes.PONG) {
       return true;
     }
     // Информация что пользователь зашел
-    if (data.type === MESSAGE_TYPES.USER_CONNECTED) {
+    if (data.type === MessageTypes.USER_CONNECTED) {
       return true;
     }
     // Сообщение
-    if (data.type === MESSAGE_TYPES.MESSAGE) {
+    if (data.type === MessageTypes.MESSAGE) {
       Stash.getInstance().pushMessages(this._chatId, [data]);
       return true;
     }
     // File
-    if (data.type === MESSAGE_TYPES.FILE) {
+    if (data.type === MessageTypes.FILE) {
       return true;
     }
     // Sticker
-    if (data.type === MESSAGE_TYPES.STICKER) {
+    if (data.type === MessageTypes.STICKER) {
       return true;
     }
     // Массив сообщений
@@ -120,15 +120,15 @@ export default class MessageWS extends DefaultSocket {
       if (data.length === 0) {
         return true;
       }
-      const chats = Stash.getInstance().getState(STASH_ENUM.CHATS);
-      const currentChat = chats.find((el : Ichat) => el.id === data[0].chat_id);
+      const chats = Stash.getInstance().getState(StashEnum.CHATS);
+      const currentChat = chats.find((el : IChat) => el.id === data[0].chat_id);
       if(!currentChat){
         throw new Error('Can\'t find currect chat');
       }
       currentChat.messages = data.sort(
-          (a : Imessage, b : Imessage) => a.time.localeCompare(b.time)
+          (a : IMessage, b : IMessage) => a.time.localeCompare(b.time)
       );
-      Stash.getInstance().setState(STASH_ENUM.CHATS, chats);
+      Stash.getInstance().setState(StashEnum.CHATS, chats);
       /** TODO: Вызываем консумеры, пока костылем ) */
       Stash.getInstance().pushMessages(currentChat.id, []);
       return true;

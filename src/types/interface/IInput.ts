@@ -1,4 +1,4 @@
-export default interface Iinput{
+export default interface IInput{
   name : string;
   label : string,
   type : string,

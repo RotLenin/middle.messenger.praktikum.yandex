@@ -1,8 +1,8 @@
 import Block from '../Block';
 import DropDownMenu from '../DropDownMenu';
 
-import Iblock from '../../../types/interface/Iblock';
-import Idropdown from '../../../types/interface/Idropdown';
+import IBlock from '../../../types/interface/IBlock';
+import IDropdown from '../../../types/interface/IDropdown';
 
 import CompiledAttachmentMenu from '../../../components/attachmentMenu/attachmentMenu.pug';
 
@@ -14,7 +14,7 @@ import location from '../../../static/img/icons/location.png'
 
 import ATTACHMENT_ICON from '../../../static/img/attachment.png';
 
-const attachmentDropdown: Idropdown[] = [
+const attachmentDropdown: IDropdown[] = [
   {id: 'attachmentImg', icon: image, name: 'Фото или Видео'},
   {id: 'attachmentFile', icon: file, name: 'Файл'},
   {id: 'attachmentLocation', icon: location, name: 'Локация'},
@@ -27,7 +27,7 @@ const CUSTOM_CLASS = 'chat-body-sender__attachment-dropdown hidden';
 /** ChatBodyDotMenu
  *
  */
-export default class ChatBodyDotMenu extends Block<Iblock> {
+export default class ChatBodyDotMenu extends Block<IBlock> {
   private _dropDownMenu : DropDownMenu;
 
   /** constructor

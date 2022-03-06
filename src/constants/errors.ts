@@ -1,11 +1,11 @@
-import Ilocals from '../types/interface/Ilocals';
+import ILocals from '../types/interface/ILocals';
 import ISPALink from '../types/interface/ISPALink';
 
 import {CHAT_ROUTE} from './routes';
 
 const backBtn : ISPALink = {title: 'Назад к чатам', path: CHAT_ROUTE}
 
-export const ERROR_404 : Ilocals = {
+export const ERROR_404 : ILocals = {
   headers: {
     title: 'Ошибка - 404',
   },
@@ -16,7 +16,7 @@ export const ERROR_404 : Ilocals = {
   },
 }
 
-export const ERROR_500 : Ilocals = {
+export const ERROR_500 : ILocals = {
   headers: {
     title: 'Ошибка - 500',
   },

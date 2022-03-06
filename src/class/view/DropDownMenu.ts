@@ -1,6 +1,6 @@
 import Block from './Block';
-import Iblock from '../../types/interface/Iblock';
-import Idropdown from '../../types/interface/Idropdown';
+import IBlock from '../../types/interface/IBlock';
+import IDropdown from '../../types/interface/IDropdown';
 import CompiledDropDownMenu from '../../components/dropDownMenu/dropDownMenu.pug';
 
 import '../../components/dropDownMenu/dropDownMenu.css';
@@ -8,7 +8,7 @@ import '../../components/dropDownMenu/dropDownMenu.css';
 /** DropDownMenu
  *  Выпадающее меню
  */
-export default class DropDownMenu extends Block<Iblock> {
+export default class DropDownMenu extends Block<IBlock> {
   /** constructor
    * @param {Record<string, any>} locals
    */
@@ -41,6 +41,7 @@ export default class DropDownMenu extends Block<Iblock> {
      * @return {void}
      */
     function toggle(event : Event) {
+      console.log('manageDropdown toggle');
       if (dropDown.classList.contains('hidden')) {
         if (body) {
           body.addEventListener('click', toggle);
@@ -65,19 +66,8 @@ export default class DropDownMenu extends Block<Iblock> {
     if (!dropDown) {
       throw new Error('Can\'t find dropdown');
     }
-
     const toggleFunc = this.manageDropdown(dropDown);
-
-    /** toggleMenu
-     * @description открываем, закрываем меню
-     * @param {Event} event
-     */
-    function toggleMenu(event : Event) {
-      toggleFunc(event);
-      event.stopPropagation();
-    }
-
-    root.addEventListener('click', toggleMenu);
+    root.addEventListener('click', toggleFunc);
   }
 
 
@@ -95,7 +85,7 @@ export default class DropDownMenu extends Block<Iblock> {
       throw new Error('Null HTML from PUG template DropDownMenu');
     }
     this.setDropdown(root, main);
-    list.forEach((item : Idropdown) => {
+    list.forEach((item : IDropdown) => {
       const btn = main.querySelector('#' + item.id);
       if (btn && item.action) {
         btn.addEventListener('click', item.action);

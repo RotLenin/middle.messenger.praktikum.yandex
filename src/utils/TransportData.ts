@@ -1,6 +1,6 @@
-import IhttpTransportOptions from '../types/interface/IhttpTransportOptions';
+import IHttpTransportOptions from '../types/interface/IHttpTransportOptions';
 
-export enum TYPES {
+export enum Types {
   JSON = 'json',
   FORM = 'form',
 }
@@ -42,12 +42,12 @@ function _json(data : Record<string, any>) {
  * @param {string} type
  * @return {IhttpTransportPrepareData}
  */
-export function prepareData(data: Record<string, any>, type: string) : IhttpTransportOptions {
+export function prepareData(data: Record<string, any>, type: string) : IHttpTransportOptions {
   let params = {};
-  if (type === TYPES.JSON) {
+  if (type === Types.JSON) {
     params = _json(data);
   }
-  if (type === TYPES.FORM) {
+  if (type === Types.FORM) {
     params = _form(data);
   }
   return params;

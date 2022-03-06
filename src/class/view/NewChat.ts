@@ -4,8 +4,8 @@ import ChatBody from '../view/chat/ChatBody';
 
 import compileChatTemplate from '../../pages/newChat.pug';
 
-import IchatLocals from '../../types/interface/IchatLocals';
-import IpageBlock from '../../types/interface/IpageBlock';
+import IChatLocals from '../../types/interface/IChatLocals';
+import IPageBlock from '../../types/interface/IPageBlock';
 
 import '../../template/chat/chat.css';
 
@@ -13,14 +13,15 @@ import '../../template/chat/chat.css';
  *  Компонент чата
  */
 export default class NewChat extends PageBlock {
-  private _locals : IchatLocals;
+  private _locals : IChatLocals;
   private _chatMenuView : ChatMenu;
   private _chatBodyView : ChatBody;
 
   /** constructor
-   *  @param {IpageBlock} locals
+   *  @param {IPageBlock} locals
    * */
-  constructor(locals : IpageBlock) {
+  constructor(locals : IPageBlock) {
+    // @ts-ignore
     locals.template = compileChatTemplate;
     super('div', locals);
   }

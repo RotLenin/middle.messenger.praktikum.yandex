@@ -1,19 +1,19 @@
 import Router from '../Router';
-import Stash, {STASH_ENUM} from '../Stash';
+import Stash, {StashEnum} from '../Stash';
 import DefaultController from './DefaultController';
 import FormTemplate from '../view/Form';
 import StaticModel from '../model/StaticModel';
 
-import Ivalidate from '../../types/interface/Ivalidate';
-import Isignup from '../../types/interface/Isignup';
-import Ilogin from '../../types/interface/Ilogin';
+import IValidate from '../../types/interface/IValidate';
+import ISignup from '../../types/interface/ISignup';
+import ILogin from '../../types/interface/ILogin';
 
 import {signup, login, userInfo} from '../../api/auth';
 
 import * as ROUTES from '../../constants/routes';
 import {CHAT_ROUTE, LOGIN_ROUTE} from '../../constants/routes';
 
-export enum AUTH_METHODS {
+export enum AuthMethods {
   LOGIN = 'login',
   SIGNUP = 'signup',
 }
@@ -56,14 +56,14 @@ export default class Auth extends DefaultController {
 
     const locals = await StaticModel.getLoginLocals()
         .then((res: Record<string, any>) => res.default);
-    const form = await this._renderTemplate(locals)
+    const form = await this.renderTemplate(locals)
 
-    if (!this._mountTemplate(form)) {
+    if (!this.mountTemplate(form)) {
       throw new Error('Can\'t mount template');
     }
 
     this._setForm()
-    this._setInputValidation(this._form)
+    this.setInputValidation(this._form)
     this._auth()
     this.initSPALinks()
 
@@ -80,14 +80,14 @@ export default class Auth extends DefaultController {
 
     const locals = await StaticModel.getSignupLocals()
         .then((res : Record<string, any>) => res.default);
-    const form = await this._renderTemplate(locals)
+    const form = await this.renderTemplate(locals)
 
-    if (!this._mountTemplate(form)) {
+    if (!this.mountTemplate(form)) {
       throw new Error('Can\'t mount template');
     }
 
     this._setForm()
-    this._setInputValidation(this._form)
+    this.setInputValidation(this._form)
     this._signup()
     this.initSPALinks()
 
@@ -138,12 +138,12 @@ export default class Auth extends DefaultController {
    *  Действия при авторизации
    */
   _authAction() {
-    this._validate(this._form)
-        .then((res : Ivalidate) => {
+    this.validate(this._form)
+        .then((res : IValidate) => {
           console.log(res)
           if (res.status) {
           // @ts-ignore
-            const data : Ilogin = res.data
+            const data : ILogin = res.data
             login(data)
                 .then((res) => {
                   if (res === 'OK') {
@@ -177,11 +177,11 @@ export default class Auth extends DefaultController {
    *  @description Действия при нажатии кнопки регистрация
    */
   _signupAction() {
-    this._validate(this._form)
-        .then((res : Ivalidate) => {
+    this.validate(this._form)
+        .then((res : IValidate) => {
           if (res.status) {
           // @ts-ignore
-            const data : Isignup = res.data
+            const data : ISignup = res.data
             signup(data)
                 .then((res) => {
                   console.log(res);
@@ -202,7 +202,7 @@ export default class Auth extends DefaultController {
     /** Проверяем пользователя на авторизацию, если уже зашел - кидаем на чат
      *  Проверяем наличие метки о проверки пользователя
      * */
-    const user = Stash.getInstance().getState(STASH_ENUM.USER);
+    const user = Stash.getInstance().getState(StashEnum.USER);
     if (user.id) {
       Router.getInstance().redirect(CHAT_ROUTE)
       return true;
@@ -212,14 +212,14 @@ export default class Auth extends DefaultController {
     if (user === {}) {
       const user = await this.checkUser();
       if (user.status === 200) {
-        Stash.getInstance().setState(STASH_ENUM.USER, user.response)
+        Stash.getInstance().setState(StashEnum.USER, user.response)
         Router.getInstance().redirect(CHAT_ROUTE)
         return true;
       } else {
         /** Выставляем метку что, пользователь не авторизован,
          *  чтобы не спамить запросами на проверку
          */
-        Stash.getInstance().setState(STASH_ENUM.USER, {});
+        Stash.getInstance().setState(StashEnum.USER, {});
         return false
       }
     }

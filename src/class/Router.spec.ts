@@ -1,19 +1,19 @@
 import Router from "./Router";
 import Auth from "./Auth";
 
-import IrouterInit from "../types/interface/IrouterInit";
+import IRouterInit from "../types/interface/IRouterInit";
 
-import TestController, {TEST_CONTROLLER_METHODS} from "./controller/TestController";
+import TestController, {TestControllerMethods} from "./controller/TestController";
 
 const LOGIN_PATH = '/login';
 const ERROR_PATH = '/404';
 
 const LOGIN_ROUTE = {
-  match: ERROR_PATH, controller: TestController, method: TEST_CONTROLLER_METHODS.LOGIN
+  match: ERROR_PATH, controller: TestController, method: TestControllerMethods.LOGIN
 }
 
 const ERROR_ROUTE = {
-  match: ERROR_PATH, controller: TestController, method: TEST_CONTROLLER_METHODS.ERROR
+  match: ERROR_PATH, controller: TestController, method: TestControllerMethods.ERROR
 }
 
 const ROUTES = [
@@ -28,7 +28,7 @@ const NOT_AUTH_ROUTES = [
   ERROR_PATH,
 ]
 
-const TestRouter : IrouterInit = {
+const TestRouter : IRouterInit = {
   routes : ROUTES,
   defaultRoute : LOGIN_ROUTE,
   loginRoute : LOGIN_PATH,

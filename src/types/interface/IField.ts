@@ -1,4 +1,4 @@
-export default interface Ifield {
+export default interface IField {
   name : string,
   value : string
 }

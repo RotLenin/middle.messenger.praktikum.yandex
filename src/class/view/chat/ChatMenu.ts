@@ -1,12 +1,12 @@
 import Block from '../Block';
-import Stash from '../../Stash';
+import Stash, {StashEnum} from '../../Stash';
 import ChatMenuItem from './ChatMenuItem';
 import Modal from "../../Modal";
-import {addChat} from "../../model/ChatModel";
+import {createChatModel} from "../../model/ChatModel";
 import InputModal from "../modal/InputModal";
 
-import Iblock from '../../../types/interface/Iblock';
-import Ichat from '../../../types/interface/Ichat';
+import IBlock from '../../../types/interface/IBlock';
+import IChat from '../../../types/interface/IChat';
 
 import compileChatMenu from '../../../components/newChatMenu/chatMenu.pug';
 
@@ -22,8 +22,9 @@ import {validationField} from "../../../utils/inputValidation";
 /** ChatMenu
  *
  */
-export default class ChatMenu extends Block<Iblock> {
+export default class ChatMenu extends Block<IBlock> {
   private _chatList : ChatMenuItem[];
+  private _chatListRoot : Element;
   private _modalRoot : HTMLElement | null;
 
   /** constructor
@@ -42,6 +43,7 @@ export default class ChatMenu extends Block<Iblock> {
     this._addChatModal = this._addChatModal.bind(this);
     this._openAddChatModal = this._openAddChatModal.bind(this);
     this._addAction = this._addAction.bind(this);
+
     this._initChats()
 
     Stash.getInstance().setChatSubscriber(this);
@@ -50,12 +52,42 @@ export default class ChatMenu extends Block<Iblock> {
   /** update
    *  @description Переопределяем
    */
-  update() {}
+  update() {
+    let chats = Stash.getInstance().getState(StashEnum.CHATS);
+    let renderedChat : number[] = [];
+
+    /** Обновляем уже отрисованные чаты */
+    this._chatList.forEach((el : ChatMenuItem, ix) => {
+      let oldProps = el.getProps();
+      let chat = chats.find((el : IChat) => el.id === oldProps.id);
+      if(!chat){
+        let deleteChat = this._chatListRoot.querySelector('#chat'+oldProps.id);
+        if(deleteChat){
+          this._chatListRoot.removeChild(deleteChat);
+        }
+        this._chatList.slice(ix, 1);
+        return false;
+      }
+      renderedChat.push(oldProps.id);
+      el.componentDidUpdate(oldProps, chat);
+    });
+    /** Проверяем не появились ли новые чаты */
+    chats.forEach((el : IChat) => {
+      /** Если чат не отрисован */
+      if(!renderedChat.includes(el.id)){
+        console.log('render new chat');
+        // @ts-ignore
+        let ChatItem : ChatMenuItem = new ChatMenuItem(el);
+        this._chatList.push(ChatItem);
+        this._chatListRoot.appendChild(ChatItem.render())
+      }
+    })
+  }
 
   /** _initChats */
   _initChats() {
     if (!this._chatList) {
-      this._chatList = this.props.locals.chats.map((el : Ichat) => {
+      this._chatList = this.props.locals.chats.map((el : IChat) => {
         return new ChatMenuItem(el);
       })
     }
@@ -73,10 +105,10 @@ export default class ChatMenu extends Block<Iblock> {
     }
 
     const chatMenuList = main.querySelector('.chat-menu__list');
-
     if (chatMenuList === null) {
       throw new Error('Can\'t find .chat-menu__list');
     }
+    this._chatListRoot = chatMenuList;
 
     this._chatList.forEach((el) => {
       chatMenuList.appendChild(el.render());
@@ -170,7 +202,7 @@ export default class ChatMenu extends Block<Iblock> {
       throw new Error('Bad input value')
     }
 
-    const addRes = await addChat(input.value);
+    const addRes = await createChatModel(input.value);
 
     if (addRes) {
       Modal.getInstance().close();

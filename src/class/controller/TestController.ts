@@ -1,14 +1,14 @@
 import DefaultController from "./DefaultController";
-import Ilocals from "../../types/interface/Ilocals";
+import ILocals from "../../types/interface/ILocals";
 
-export enum TEST_CONTROLLER_METHODS {
+export enum TestControllerMethods {
   LOGIN = 'login',
   ERROR = 'error',
 }
 
 export default class TestController extends DefaultController {
   private static instance: TestController;
-  public _template : (locals : Ilocals) => string;
+  public _template : (locals : ILocals) => string;
 
   constructor(){
     super();

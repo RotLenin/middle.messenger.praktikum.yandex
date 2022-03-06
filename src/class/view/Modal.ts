@@ -1,17 +1,17 @@
 import Block from './Block';
-import Iblock from '../../types/interface/Iblock';
+import IBlock from '../../types/interface/IBlock';
 
 import '../../template/modal/modal.css';
 
 /** Modal
  *  @description Модалка
  */
-export default class Modal extends Block<Iblock> {
+export default class Modal extends Block<IBlock> {
   /**
    * @param {string} tagName
    * @param {object} props
    */
-  constructor(tagName : string, props : Iblock) {
+  constructor(tagName : string, props : IBlock) {
     super(tagName, props);
   }
 

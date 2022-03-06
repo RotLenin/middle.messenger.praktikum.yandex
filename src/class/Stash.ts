@@ -1,9 +1,9 @@
 import MessageWS from '../websocket/message';
-import Ichat from '../types/interface/Ichat';
-import Imessage from '../types/interface/Imessage';
+import IChat from '../types/interface/IChat';
+import IMessage from '../types/interface/IMessage';
 import Block from './view/Block';
 
-export enum STASH_ENUM {
+export enum StashEnum {
   USER= 'user',
   CHATS= 'chats',
   SUBSCRIBER= 'subscriber'
@@ -32,9 +32,9 @@ export default class Stash {
    *  Тут будем вписывать стандартные значения Stash
    */
   public init() {
-    this._stash[STASH_ENUM.USER] = {};
-    this._stash[STASH_ENUM.CHATS] = [];
-    this._stash[STASH_ENUM.SUBSCRIBER] = {};
+    this._stash[StashEnum.USER] = {};
+    this._stash[StashEnum.CHATS] = [];
+    this._stash[StashEnum.SUBSCRIBER] = {};
   }
 
   /** setState
@@ -81,18 +81,56 @@ export default class Stash {
     return this._lastTemplate === template
   }
 
+  /** getUser
+   *
+   * @return {any}
+   */
+  getUser(){
+    return this.getState(StashEnum.USER);
+  }
+
+  /** getChats
+   *
+   * @return {any}
+   */
+  getChats(){
+    return this.getState(StashEnum.CHATS);
+  }
+
   /** getChatByChatId
    * @description Отдаем чат по ID
    * @param {number} selectedChatId
    * @throws {Error}
-   * @return {Ichat}
+   * @return {IChat}
    */
-  getChatByChatId(selectedChatId : number) : Ichat {
-    const chat = this._stash[STASH_ENUM.CHATS].find((el : Ichat) => el.id === selectedChatId);
+  getChatByChatId(selectedChatId : number) : IChat {
+    const chat = this._stash[StashEnum.CHATS].find((el : IChat) => el.id === selectedChatId);
     if (!chat) {
       throw new Error('Can\'t find chat by id : '+ selectedChatId);
     }
     return chat;
+  }
+
+  /** addChat
+   *
+   * @param {IChat | IChat[]} chat
+   * @return {boolean}
+   */
+  addChat(chat : IChat | IChat[]){
+    let chats = this.getState(StashEnum.CHATS);
+    /** Api почему то возвращает список добавленных чатов */
+    if(Array.isArray(chat)){
+      chat.forEach((el : IChat) => chats.push(el))
+      return true;
+    }
+    chats.push(chat);
+    return true;
+  }
+
+  deleteChat(chatId : number){
+    let chats = this.getState(StashEnum.CHATS);
+    this.setState(StashEnum.CHATS, chats.filter((el : IChat) => el.id !== chatId));
+    return true;
   }
 
   /** getSocketByChatId
@@ -113,9 +151,9 @@ export default class Stash {
    * @description Получаем сообщения чата по ID
    * @param {number} selectedChatId
    * @throws {Error}
-   * @return {Imessage[]}
+   * @return {IMessage[]}
    */
-  getMessagesByChatId(selectedChatId : number) : Imessage[] {
+  getMessagesByChatId(selectedChatId : number) : IMessage[] {
     const chat = this.getChatByChatId(selectedChatId);
     if (!chat.messages) {
       throw new Error('Undefined propery messages');
@@ -157,9 +195,9 @@ export default class Stash {
   /** pushMessages
    * @description Заливаем новые сообщения в хранилище
    * @param {number} chatId
-   * @param {Imessage[]} messages
+   * @param {IMessage[]} messages
    */
-  pushMessages(chatId : number, messages : Imessage[]) {
+  pushMessages(chatId : number, messages : IMessage[]) {
     const state = this.getMessagesByChatId(chatId);
     messages.forEach((el) => {
       /** Приводим к общему формату */
@@ -173,14 +211,14 @@ export default class Stash {
   }
 
   updateSubscriber(name : string){
-    this._stash[STASH_ENUM.SUBSCRIBER][name].forEach((el : Block<any>) => el.update());
+    this._stash[StashEnum.SUBSCRIBER][name].forEach((el : Block<any>) => el.update());
   }
 
   /** updateChat
    *  @description вызываем когда обновились чаты
    */
   updateChat(){
-    this.updateSubscriber(STASH_ENUM.CHATS);
+    this.updateSubscriber(StashEnum.CHATS);
   }
 
   /** setChatSubscriber
@@ -188,10 +226,10 @@ export default class Stash {
    *  @param {Block} subscriber
    */
   setChatSubscriber(subscriber : Block<any>){
-    if(!this._stash[STASH_ENUM.SUBSCRIBER][STASH_ENUM.CHATS]){
-      this._stash[STASH_ENUM.SUBSCRIBER][STASH_ENUM.CHATS] = [];
+    if(!this._stash[StashEnum.SUBSCRIBER][StashEnum.CHATS]){
+      this._stash[StashEnum.SUBSCRIBER][StashEnum.CHATS] = [];
     }
-    this._stash[STASH_ENUM.SUBSCRIBER].chats.push(subscriber);
+    this._stash[StashEnum.SUBSCRIBER].chats.push(subscriber);
   }
 
 
@@ -199,6 +237,6 @@ export default class Stash {
    *  Очищаем все данные при выходе пользователя
    */
   clearState() {
-    Object.values(STASH_ENUM).forEach((key) => this._stash[key] = {});
+    Object.values(StashEnum).forEach((key) => this._stash[key] = {});
   }
 }

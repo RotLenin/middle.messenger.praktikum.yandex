@@ -1,4 +1,4 @@
-export default interface Isignup {
+export default interface ISignup {
   first_name: string,
   second_name: string,
   login: string,

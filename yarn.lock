@@ -2739,12 +2739,12 @@ js-yaml@4.1.0, js-yaml@^4.1.0:
   dependencies:
     argparse "^2.0.1"
 
-jsdom-global@^3.0.2:
+jsdom-global@3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/jsdom-global/-/jsdom-global-3.0.2.tgz#6bd299c13b0c4626b2da2c0393cd4385d606acb9"
   integrity sha1-a9KZwTsMRiay2iwDk81DhdYGrLk=
 
-jsdom@^19.0.0:
+jsdom@19.0.0:
   version "19.0.0"
   resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-19.0.0.tgz#93e67c149fe26816d38a849ea30ac93677e16b6a"
   integrity sha512-RYAyjCbxy/vri/CfnjUWJQQtZ3LKlLnDqj+9XLNnJPgEGeirZs3hllKR20re8LUZ6o1b1X4Jat+Qd26zmP41+A==
@@ -3095,7 +3095,7 @@ mkdirp-classic@^0.5.2, mkdirp-classic@^0.5.3:
   resolved "https://registry.yarnpkg.com/mkdirp-classic/-/mkdirp-classic-0.5.3.tgz#fa10c9115cc6d8865be221ba47ee9bed78601113"
   integrity sha512-gKLcREMhtuZRwRAfqP3RFW+TK4JqApVBtOIftVgjuABpAtpxhPGaDcfvbhNvD0B8iD1oUr/txX35NjcaY6Ns/A==
 
-mocha@^9.2.1:
+mocha@9.2.1:
   version "9.2.1"
   resolved "https://registry.yarnpkg.com/mocha/-/mocha-9.2.1.tgz#a1abb675aa9a8490798503af57e8782a78f1338e"
   integrity sha512-T7uscqjJVS46Pq1XDXyo9Uvey9gd3huT/DD9cYBb4K2Xc/vbKRPUWK067bxDQRK0yIz6Jxk73IrnimvASzBNAQ==

@@ -5,7 +5,7 @@ import './QuestionModal.css';
 
 import compileQuestionModal from './QuestionModal.pug';
 
-import IpageBlock from '../../../types/interface/IpageBlock';
+import IPageBlock from '../../../types/interface/IPageBlock';
 
 /** Chat
  *  Обертка над шаблоном profileImgModal.pug
@@ -14,7 +14,7 @@ export default class QuestionModal extends Modal {
   /**
    * @param {object} locals
    */
-  constructor(locals : IpageBlock) {
+  constructor(locals : IPageBlock) {
     locals.template = compileQuestionModal;
     super('div', locals);
   }

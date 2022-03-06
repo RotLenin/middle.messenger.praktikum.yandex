@@ -1,10 +1,10 @@
 import * as ROUTES from './routes';
 
-import IinputWithError from '../types/interface/IinputWithError';
+import IInputWithError from '../types/interface/IInputWithError';
 import ISPALink from '../types/interface/ISPALink';
 
 import send from '../static/img/send.png';
-import Ilocals from '../types/interface/Ilocals';
+import ILocals from '../types/interface/ILocals';
 
 const profileFields = [
   {name: 'email', title: 'Почта', value: null},
@@ -15,7 +15,7 @@ const profileFields = [
   {name: 'phone', title: 'Телефон', value: null},
 ];
 
-const profileChangeInfo: IinputWithError[] = [
+const profileChangeInfo: IInputWithError[] = [
   {
     name: 'email',
     value: 'pochta@yandex.ru',
@@ -60,7 +60,7 @@ const profileChangeInfo: IinputWithError[] = [
   },
 ];
 
-const profileChangePassword: IinputWithError[] = [
+const profileChangePassword: IInputWithError[] = [
   {
     name: 'oldPassword',
     value: null,
@@ -97,7 +97,7 @@ const password: ISPALink = {
 const out = {title: 'Выйти', id: 'logout'};
 const backBtn = {img: send, path: ROUTES.CHAT_ROUTE};
 
-const profile : Record<string, Ilocals> = {
+const profile : Record<string, ILocals> = {
   profile: {
     headers: {
       title: 'Профиль',

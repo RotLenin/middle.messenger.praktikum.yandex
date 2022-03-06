@@ -1,5 +1,5 @@
 import Block from '../Block';
-import Iblock from '../../../types/interface/Iblock';
+import IBlock from '../../../types/interface/IBlock';
 import compileChatBody from '../../../components/newChatBody/chatBodyHeader.pug';
 
 import ChatBodyDotMenu from './ChatBodyDotMenu';
@@ -9,7 +9,7 @@ import '../../../components/chatBody/chatBodyHeader.css';
 /** ChatBodyHeader
  *
  */
-export default class ChatBodyHeader extends Block<Iblock> {
+export default class ChatBodyHeader extends Block<IBlock> {
   private _links : Record<string, any>;
   private _dotMenu : ChatBodyDotMenu;
 

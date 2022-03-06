@@ -1,8 +1,8 @@
 import Block from '../Block';
 import Stash from '../../Stash';
 import messageWS from '../../../websocket/message';
-import Iblock from '../../../types/interface/Iblock';
-import Ichat from '../../../types/interface/Ichat';
+import IBlock from '../../../types/interface/IBlock';
+import IChat from '../../../types/interface/IChat';
 import compileChatBodySender from '../../../components/newChatBody/chatBodySender.pug';
 
 import ChatBodyAttachmentMenu from './ChatBodyAttachmentMenu';
@@ -23,10 +23,10 @@ const SEND_ICON_PROPS = {img: SEND_ICON, alt: 'Отправить'}
 /** ChatBodySender
  *
  */
-export default class ChatBodySender extends Block<Iblock> {
+export default class ChatBodySender extends Block<IBlock> {
   private _attachmentMenu : ChatBodyAttachmentMenu;
   private _sendInput : ChatBodySendInput;
-  private _selectedChat : Ichat | null;
+  private _selectedChat : IChat | null;
 
   /** constructor
    *
@@ -98,10 +98,10 @@ export default class ChatBodySender extends Block<Iblock> {
 
   /** render
    * @description
-   * @param {Ichat | null} selectedChat
+   * @param {IChat | null} selectedChat
    * @return {HTMLElement}
    */
-  render(selectedChat : Ichat | null = null) {
+  render(selectedChat : IChat | null = null) {
     const {template, locals} = this._meta.props;
     const main = this.textToHtml(template(locals));
 
