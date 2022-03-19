@@ -6,6 +6,5 @@
 	},
 	"validators": {
 		"*.css": ["parcel-validator-stylelint"],
-		"*.{ts,tsx}": ["@parcel/validator-typescript"]
 	}
 }

@@ -1,7 +1,5 @@
-mixin dropDownMenu(list)
-    .drop-down-menu.bg_main&attributes(attributes)
-        each item in list
-            .drop-down-menu__item
-                img(src=item.icon).drop-down-menu__item-icon
-                .drop-down-menu__item-name.text_main= item.name
-
+.drop-down-menu.bg_main(class=customClass)
+    each item in list
+        .drop-down-menu__item(id = item.id)
+            img(src=item.icon).drop-down-menu__item-icon
+            .drop-down-menu__item-name.text_main= item.name

@@ -3,10 +3,13 @@
  */
 import '../../types/type/Callback';
 
+/** EventBus
+ *
+ */
 class EventBus {
   public listeners : Record<string, any>;
 
-  /**
+  /** constructor
    *
    */
   constructor() {
@@ -36,7 +39,7 @@ class EventBus {
 
     this.listeners[event] = this.listeners[event].filter(
         (listener: any) => {
-          return listener !== callback
+          return listener !== callback;
         }
     );
   }

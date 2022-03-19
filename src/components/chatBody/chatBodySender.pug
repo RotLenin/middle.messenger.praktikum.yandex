@@ -2,11 +2,10 @@ include ../dropDownMenu/dropDownMenu
 include ../attachmentMenu/attachmentMenu
 include ../sendInput/sendInput
 
-mixin chatBodySender()
-    .chat-body-sender.bd-top
-        .chat-body-sender__attachment
-            +attachmentMenu(attachmentDropdown)
-        .chat-body-sender__message
-            +sendInput
-        .chat-body-sender__send
-            img(src=sendImg, alt='alt')
+.chat-body-sender.bd-top
+    .chat-body-sender__attachment
+        +attachmentMenu(attachmentDropdown)
+    .chat-body-sender__message
+        +sendInput
+    .chat-body-sender__send
+        img(src=sendImg, alt='alt')

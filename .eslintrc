@@ -11,7 +11,10 @@
     "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
-    "semi": "off"
+    "max-len": ["warn", { "code": 80 }],
+    "semi": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/ban-ts-comment": "off"
   },
   "parserOptions": {
     "ecmaVersion": 6,

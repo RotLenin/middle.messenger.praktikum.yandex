@@ -10,7 +10,10 @@
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended"
   ],
-  "rules": {},
+  "rules": {
+    "no-empty-function": "off",
+    "@typescript-eslint/no-empty-function": ["error"]
+  },
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module"

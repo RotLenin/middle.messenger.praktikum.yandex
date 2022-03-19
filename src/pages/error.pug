@@ -1,10 +1,12 @@
 extends ../template/error/error
 
-block title
-  title 404
+include ../components/defaultLink/defaultLink
 
 block error
-  span= "404"
+  span= code
 
 block info
-  span= "Мы уже фиксим =)"
+  span= infoText
+
+block back
+  +defaultLink(backBtn.title, backBtn.path)

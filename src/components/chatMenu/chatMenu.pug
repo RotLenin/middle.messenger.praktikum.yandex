@@ -5,6 +5,7 @@ include chatMenuItem
 mixin chatMenu()
     .chat-menu
         .chat-menu__header
+          img(src=addChatImg).chat-menu__add-chat
           a(data-path=profileLink).chat-menu__profile-link.text_second.no_decoration= "Профиль >"
         .chat-menu__filter
             +searchFilter

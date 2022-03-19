@@ -1,0 +1,23 @@
+.chat-body-header {
+  box-sizing: border-box;
+  padding: 0 0 5px;
+  height: 62px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.chat-body-header__chat-info {
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.chat-body-header__chat-img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  margin-right: 10px;
+}

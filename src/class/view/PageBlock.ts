@@ -1,16 +1,17 @@
 import Block from './Block';
-import IpageBlock from "../../types/interface/IpageBlock";
+import IPageBlock from '../../types/interface/IPageBlock';
 import {setTitle} from '../../utils/HeaderHelper';
 
 /** PageBlock
  *  Расширяем Block до шаблона страницы
  */
-class PageBlock extends Block<IpageBlock> {
+class PageBlock extends Block<IPageBlock> {
+  public _mounted = true;
   /**
    * @param {string} tagName
    * @param {object} props
    */
-  constructor(tagName : string, props : IpageBlock) {
+  constructor(tagName : string, props : IPageBlock) {
     super(tagName, props);
   }
 
@@ -19,6 +20,11 @@ class PageBlock extends Block<IpageBlock> {
     this._initHeader();
     super.init();
   }
+
+  /** update
+   *  @description Переопределяем
+   */
+  update() {}
 
   /** _initHeader
    *  Выставляем настройки Head блока html
@@ -38,6 +44,20 @@ class PageBlock extends Block<IpageBlock> {
   render() {
     const {template, locals} = this._meta.props;
     return template(locals);
+  }
+
+  /** setMount
+   *  @description Выставить положительный флаг монтирования
+   */
+  setMount() {
+    this._mounted = true;
+  }
+
+  /** setUnmount
+   *  @description Выставить отрицательный флаг монтирования
+   */
+  setUnmount() {
+    this._mounted = false;
   }
 }
 
