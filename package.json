@@ -11,7 +11,8 @@
     "dev": "NODE_ENV=development webpack-dev-server --open",
     "start": "NODE_ENV=production webpack && node index.ts",
     "startAfterBuild": "node index.ts",
-    "build": "NODE_ENV=production webpack"
+    "build": "NODE_ENV=production webpack",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "Gavrik Alexandr",
@@ -81,7 +82,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit" : "yarn test"
+      "pre-commit": "yarn test"
     }
   }
 }
