@@ -2,10 +2,10 @@ FROM ubuntu:20.04
 # Устанавливаем локальное время (были проблемы при установке пакетов)
 ENV TZ=Europe/Moscow
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-# Устанавливае wget
-RUN apt-get update && apt-get install -y wget
+# Устанавливае wget | Чистим apt-list перед apt-get update
+RUN apt-get update && apt-get install -y --no-install-recommends wget
 # Получаем нужную Ноду из бинарников
-RUN wget https://nodejs.org/dist/latest-v16.x/node-v16.14.2-linux-x64.tar.gz
+RUN wget --no-check-certificate https://nodejs.org/dist/latest-v16.x/node-v16.14.2-linux-x64.tar.gz
 RUN tar -C /usr/local --strip-components 1 -xf ./node-v16.14.2-linux-x64.tar.gz
 RUN node -v
 # Устанавливаем npm (на всякий случай, дальше поставим yarn)
