@@ -136,7 +136,6 @@ abstract class Block<Props extends Record<string, any>> {
 
   /** _render
    *  Монтируем результат render в корень
-   *  TODO: было требование заменить innerHTML
    *  для этого пришлось бы отказаться от PUG
    *  либо как то его оборачивать, на что не хватило времени =)
    */

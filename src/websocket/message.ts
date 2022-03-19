@@ -129,7 +129,6 @@ export default class MessageWS extends DefaultSocket {
           (a : IMessage, b : IMessage) => a.time.localeCompare(b.time)
       );
       Stash.getInstance().setState(StashEnum.CHATS, chats);
-      /** TODO: Вызываем консумеры, пока костылем ) */
       Stash.getInstance().pushMessages(currentChat.id, []);
       return true;
     }

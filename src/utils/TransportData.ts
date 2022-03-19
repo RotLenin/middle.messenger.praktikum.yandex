@@ -7,7 +7,6 @@ export enum Types {
 
 /** _form
  * Имитация отправки из формы
- * TODO: добавить функционал отправки файла
  * @param {object} data
  * @return {IhttpTransportPrepareData}
  */

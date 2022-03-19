@@ -7,7 +7,6 @@ export default interface IChat {
   img : string,
   name : string,
   notification : number,
-  // TODO: В целом просто будет список сообщений, и будем брать последнее
   lastMessage : IMessage,
   path? : string,
   selected? : boolean,

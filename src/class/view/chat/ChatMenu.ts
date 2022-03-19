@@ -209,6 +209,5 @@ export default class ChatMenu extends Block<IBlock> {
       return true;
     }
     console.log(addRes);
-    /** TODO: Тут надо обработать ошибки при кривых запросах */
   }
 }

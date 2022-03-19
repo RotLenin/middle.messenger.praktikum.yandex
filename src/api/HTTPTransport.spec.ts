@@ -9,9 +9,6 @@ describe('Тестируем HTTPtransport', function() {
       transport = new HTTPTransport('/test');
     })
 
-    /** TODO: Честно говоря не очень понимаю как тестировать транспорт
-     *  без реализации. Т.к. Транспорт сразу обрабатывает ответ
-     * */
     it('Тестируем get запрос', async function() {
       const res = await transport.get('', {});
       expect(res.status, '404');

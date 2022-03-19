@@ -83,7 +83,6 @@ export default class Router {
 
   /** _createRegExp
    * Создаем регулярку,
-   * TODO : в идеале доработать =)
    * @param {string} match
    * @return {string}
    */

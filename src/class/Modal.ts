@@ -109,7 +109,6 @@ export default class Modal {
       this._templateClass = template;
       this._initTemplate(locals);
       this.render(locals);
-    /** TODO: Тут сделать серьезную проверку */
     } else if (!isEqual(this._locals, locals)) {
       this._template.setProps(locals);
       this.render(locals);

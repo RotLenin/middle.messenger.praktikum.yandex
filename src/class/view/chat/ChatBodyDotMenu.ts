@@ -207,7 +207,6 @@ export default class ChatBodyDotMenu extends Block<IBlock> {
       return true;
     }
     console.log(addRes);
-    /** TODO: Тут надо обработать ошибки при кривых запросах */
   }
 
   /** _deleteUserModal
@@ -291,7 +290,6 @@ export default class ChatBodyDotMenu extends Block<IBlock> {
       Modal.getInstance().close();
       return true;
     }
-    /** TODO: Тут надо обработать ошибки при кривых запросах */
   }
 
   /** _deleteChatModal
@@ -355,6 +353,5 @@ export default class ChatBodyDotMenu extends Block<IBlock> {
       return true;
     }
     console.log(addRes);
-    /** TODO: Тут надо обработать ошибки при кривых запросах */
   }
 }

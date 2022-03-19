@@ -166,7 +166,6 @@ export default class Stash {
     return chat.messages;
   }
 
-  /** TODO: Помоему Subscriber будет правильнее но уже реализовано =)  */
   /** setConsumerByChatId
    * @description Подписываем чат на изменения в сообщениях
    * @param {number} chatId

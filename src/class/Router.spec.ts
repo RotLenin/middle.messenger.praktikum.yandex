@@ -36,14 +36,13 @@ const TestRouter : IRouterInit = {
   errorRoute: ERROR_ROUTE,
 };
 
-/* TODO: Не имею права подключать реальные контроллеры, т.к. pug ломает тесты */
 describe('Тестируем Роутер', function() {
   before('Создаем Роутер', async function() {
     Auth.getInstance().init(LOGIN_PATH);
     const router = Router.getInstance();
     router.init(TestRouter);
   });
-  /* TODO: Не нашел пока спопособа изменить window.location
+/* Не нашел пока спопособа изменить window.location
 * На отличный от about:blanc (именно в location)
 * Текущая ошибка
 * SecurityError: Could not parse url argument "/login" to pushState against base URL "about:blank".

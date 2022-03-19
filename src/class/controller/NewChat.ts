@@ -83,7 +83,6 @@ export default class NewChat extends DefaultController {
    * @param {IPageBlock} locals
    */
   _drowChat(locals :IPageBlock) {
-    /** TODO : хотелось бы умного обновления, но пока будем всегда перерисовывать */
     this._templateInstance = new this._template(locals)
     this.mountTemplateAsHTMLElement(this._templateInstance.render());
     this.setLastTemplate();
@@ -100,7 +99,6 @@ export default class NewChat extends DefaultController {
       selected : IChat | null = null
   ) : IChat[] {
     return chats.reduce((acc : IChat[], el : IChat) => {
-      // TODO: Константа с слешом, ломается навешивание редиректов
       el.path = '/chat' + '/' + el.id;
       el.selected = selected === null ? false : el.id === selected.id;
       acc.push(el);
