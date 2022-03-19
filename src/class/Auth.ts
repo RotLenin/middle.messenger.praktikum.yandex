@@ -23,7 +23,11 @@ export default class Auth {
     return Auth.instance;
   }
 
-  public init(loginPath : string){
+  /** init
+   * @description Инициализируем Роутер
+   * @param {string} loginPath
+   */
+  public init(loginPath : string) {
     this._loginPath = loginPath;
   }
 

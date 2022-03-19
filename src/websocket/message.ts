@@ -122,7 +122,7 @@ export default class MessageWS extends DefaultSocket {
       }
       const chats = Stash.getInstance().getState(StashEnum.CHATS);
       const currentChat = chats.find((el : IChat) => el.id === data[0].chat_id);
-      if(!currentChat){
+      if (!currentChat) {
         throw new Error('Can\'t find currect chat');
       }
       currentChat.messages = data.sort(

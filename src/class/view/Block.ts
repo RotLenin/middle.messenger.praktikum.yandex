@@ -160,7 +160,7 @@ abstract class Block<Props extends Record<string, any>> {
     return this.element;
   }
 
-    /** _makePropsProxy
+  /** _makePropsProxy
    * Создает proxy отслеживающий свойства Блока
    * @param {object} props
    * @return {Proxy}

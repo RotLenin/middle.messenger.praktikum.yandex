@@ -138,7 +138,7 @@ export default class Router {
   /** getCurrentRoute
    *  @return {IRoute}
    */
-  public getCurrentRoute() : IRoute{
+  public getCurrentRoute() : IRoute {
     return this._route;
   }
 }

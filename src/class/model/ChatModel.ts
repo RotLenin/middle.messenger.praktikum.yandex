@@ -1,25 +1,25 @@
-import Stash from "../Stash";
+import Stash from '../Stash';
 
-import IChat from "../../types/interface/IChat";
+import IChat from '../../types/interface/IChat';
 
-import {createChats, getChats, deleteChat, getChatToken} from "../../api/chats";
-import MessageWS from "../../websocket/message";
+import {createChats, getChats, deleteChat, getChatToken} from '../../api/chats';
+import MessageWS from '../../websocket/message';
 
 /** addChat
  *
  * @param {string} chatName
  * @return {boolean}
  */
-export async function createChatModel(chatName : string){
+export async function createChatModel(chatName : string) {
   const addRes = await createChats(chatName);
   if (addRes.status === 200) {
-    let chatRes = await getChats(0, 20, chatName);
+    const chatRes = await getChats(0, 20, chatName);
     // @ts-ignore
-    if(chatRes.code && chatRes.code !== 200){
+    if (chatRes.code && chatRes.code !== 200) {
       throw new Error('Can\'t get added chat !');
     }
     let chat : IChat = JSON.parse(chatRes.response)[0];
-    let stash = Stash.getInstance();
+    const stash = Stash.getInstance();
     chat = await prepareChat(chat);
     stash.addChat(chat);
     stash.updateChat();
@@ -55,10 +55,10 @@ export async function prepareChat(chat : IChat) : Promise<IChat> {
  * @param {number} chatId
  * @return {Promise<boolean>}
  */
-export async function deleteChatModel(chatId : number){
+export async function deleteChatModel(chatId : number) {
   const addRes = await deleteChat(chatId);
   if (addRes.status === 200) {
-    let stash = Stash.getInstance();
+    const stash = Stash.getInstance();
     stash.deleteChat(chatId);
     stash.updateChat();
     return true;

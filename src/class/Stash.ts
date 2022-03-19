@@ -85,7 +85,7 @@ export default class Stash {
    *
    * @return {any}
    */
-  getUser(){
+  getUser() {
     return this.getState(StashEnum.USER);
   }
 
@@ -93,7 +93,7 @@ export default class Stash {
    *
    * @return {any}
    */
-  getChats(){
+  getChats() {
     return this.getState(StashEnum.CHATS);
   }
 
@@ -116,10 +116,10 @@ export default class Stash {
    * @param {IChat | IChat[]} chat
    * @return {boolean}
    */
-  addChat(chat : IChat | IChat[]){
-    let chats = this.getState(StashEnum.CHATS);
+  addChat(chat : IChat | IChat[]) {
+    const chats = this.getState(StashEnum.CHATS);
     /** Api почему то возвращает список добавленных чатов */
-    if(Array.isArray(chat)){
+    if (Array.isArray(chat)) {
       chat.forEach((el : IChat) => chats.push(el))
       return true;
     }
@@ -127,8 +127,13 @@ export default class Stash {
     return true;
   }
 
-  deleteChat(chatId : number){
-    let chats = this.getState(StashEnum.CHATS);
+  /** deleteChat
+   * @description Удаляем чат из хранилища
+   * @param {number} chatId
+   * @return {boolean}
+   */
+  deleteChat(chatId : number) {
+    const chats = this.getState(StashEnum.CHATS);
     this.setState(StashEnum.CHATS, chats.filter((el : IChat) => el.id !== chatId));
     return true;
   }
@@ -210,14 +215,18 @@ export default class Stash {
     consumers.forEach((el) => el.update())
   }
 
-  updateSubscriber(name : string){
+  /** updateSubscriber
+   * @description Обновляем подписчиков
+   * @param {string} name
+   */
+  updateSubscriber(name : string) {
     this._stash[StashEnum.SUBSCRIBER][name].forEach((el : Block<any>) => el.update());
   }
 
   /** updateChat
    *  @description вызываем когда обновились чаты
    */
-  updateChat(){
+  updateChat() {
     this.updateSubscriber(StashEnum.CHATS);
   }
 
@@ -225,8 +234,8 @@ export default class Stash {
    *  @description Подписываемся на изменения Чатов
    *  @param {Block} subscriber
    */
-  setChatSubscriber(subscriber : Block<any>){
-    if(!this._stash[StashEnum.SUBSCRIBER][StashEnum.CHATS]){
+  setChatSubscriber(subscriber : Block<any>) {
+    if (!this._stash[StashEnum.SUBSCRIBER][StashEnum.CHATS]) {
       this._stash[StashEnum.SUBSCRIBER][StashEnum.CHATS] = [];
     }
     this._stash[StashEnum.SUBSCRIBER].chats.push(subscriber);

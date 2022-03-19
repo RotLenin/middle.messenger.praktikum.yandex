@@ -1,4 +1,4 @@
-import Router from "../../Router";
+import Router from '../../Router';
 import Block from '../Block';
 import Modal from '../../Modal';
 import DropDownMenu from '../DropDownMenu';
@@ -15,7 +15,7 @@ import {validationField, validationInput} from '../../../utils/inputValidation';
 import {addUserToChat, deleteUserFromChat} from '../../../api/chats';
 import {deleteChatModel} from '../../model/ChatModel';
 
-import {CHAT_ROUTE} from "../../../constants/routes";
+import {CHAT_ROUTE} from '../../../constants/routes';
 
 import '../../../components/dotMenu/dotMenu.css';
 
