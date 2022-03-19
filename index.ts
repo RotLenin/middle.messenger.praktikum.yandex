@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 const path = require('path');
 
-const PORT = 8080;
+const PORT = 3000;
 const HOST = '0.0.0.0';
 /** Возможность прокидывания порта из CLI */
 const port = process.env.PORT || PORT;
