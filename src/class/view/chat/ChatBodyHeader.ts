@@ -77,7 +77,6 @@ export default class ChatBodyHeader extends Block<IBlock> {
    * @param {Record<string, any>} newProps
    */
   update(newProps? : Record<string, any>):void {
-    /** TODO: Попытался перегрузить метод у родителя ... пока такое себе */
     if (!newProps) {
       throw new Error('need newProps');
     }

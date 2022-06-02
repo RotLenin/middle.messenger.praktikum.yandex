@@ -58,5 +58,4 @@ export const NOT_AUTH_ROUTES = [
   '/',
   LOGIN_ROUTE,
   SIGNUP_ROUTE,
-  /** TODO: по сути тут еще должны быть ошибки, но там возврат в чат... */
 ]

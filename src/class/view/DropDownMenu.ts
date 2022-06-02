@@ -70,7 +70,6 @@ export default class DropDownMenu extends Block<IBlock> {
     root.addEventListener('click', toggleFunc);
   }
 
-
   /** render
    * @description render =)
    * @param {HTMLElement} root

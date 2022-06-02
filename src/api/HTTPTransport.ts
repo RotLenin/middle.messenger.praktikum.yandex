@@ -1,7 +1,7 @@
 import IHttpTransportOptions from '../types/interface/IHttpTransportOptions';
 import {queryStringify} from '../utils/queryString';
 
-import HttpStatusCode from "../types/enum/HttpStatusCode";
+import HttpStatusCode from '../types/enum/HttpStatusCode';
 
 const enum Methods {
   GET = 'GET',
@@ -28,8 +28,8 @@ export default class HTTPTransport {
    * @param {Record<string, any>} defaultHeaders
    */
   constructor(subpath : string,
-              url : string = API_URL,
-              defaultHeaders : Record<string, any> = {}
+      url : string = API_URL,
+      defaultHeaders : Record<string, any> = {}
   ) {
     this.URL = url;
     Object.assign(this.DEFAULT_HEADERS, defaultHeaders);

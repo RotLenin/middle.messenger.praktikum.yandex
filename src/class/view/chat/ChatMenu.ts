@@ -1,9 +1,9 @@
 import Block from '../Block';
 import Stash, {StashEnum} from '../../Stash';
 import ChatMenuItem from './ChatMenuItem';
-import Modal from "../../Modal";
-import {createChatModel} from "../../model/ChatModel";
-import InputModal from "../modal/InputModal";
+import Modal from '../../Modal';
+import {createChatModel} from '../../model/ChatModel';
+import InputModal from '../modal/InputModal';
 
 import IBlock from '../../../types/interface/IBlock';
 import IChat from '../../../types/interface/IChat';
@@ -17,7 +17,7 @@ import {PROFILE_ROUTE} from '../../../constants/routes';
 
 import '../../../components/chatMenu/chatMenu.css';
 import '../../../components/searchFilter/searchFilter.css';
-import {validationField} from "../../../utils/inputValidation";
+import {validationField} from '../../../utils/inputValidation';
 
 /** ChatMenu
  *
@@ -53,16 +53,16 @@ export default class ChatMenu extends Block<IBlock> {
    *  @description Переопределяем
    */
   update() {
-    let chats = Stash.getInstance().getState(StashEnum.CHATS);
-    let renderedChat : number[] = [];
+    const chats = Stash.getInstance().getState(StashEnum.CHATS);
+    const renderedChat : number[] = [];
 
     /** Обновляем уже отрисованные чаты */
     this._chatList.forEach((el : ChatMenuItem, ix) => {
-      let oldProps = el.getProps();
-      let chat = chats.find((el : IChat) => el.id === oldProps.id);
-      if(!chat){
-        let deleteChat = this._chatListRoot.querySelector('#chat'+oldProps.id);
-        if(deleteChat){
+      const oldProps = el.getProps();
+      const chat = chats.find((el : IChat) => el.id === oldProps.id);
+      if (!chat) {
+        const deleteChat = this._chatListRoot.querySelector('#chat'+oldProps.id);
+        if (deleteChat) {
           this._chatListRoot.removeChild(deleteChat);
         }
         this._chatList.slice(ix, 1);
@@ -74,10 +74,10 @@ export default class ChatMenu extends Block<IBlock> {
     /** Проверяем не появились ли новые чаты */
     chats.forEach((el : IChat) => {
       /** Если чат не отрисован */
-      if(!renderedChat.includes(el.id)){
+      if (!renderedChat.includes(el.id)) {
         console.log('render new chat');
         // @ts-ignore
-        let ChatItem : ChatMenuItem = new ChatMenuItem(el);
+        const ChatItem : ChatMenuItem = new ChatMenuItem(el);
         this._chatList.push(ChatItem);
         this._chatListRoot.appendChild(ChatItem.render())
       }
@@ -135,22 +135,22 @@ export default class ChatMenu extends Block<IBlock> {
    */
   _addChatModal() {
     Modal.getInstance().setTemplate(
-      InputModal,
-      {
-        locals: {
-          title: 'Добавить чат',
-          input: {
-            name: 'chat_name',
-            label: 'id',
-            placeholder: 'Название чата',
-            type: 'text',
-            errorText: 'Неверное название чата',
+        InputModal,
+        {
+          locals: {
+            title: 'Добавить чат',
+            input: {
+              name: 'chat_name',
+              label: 'id',
+              placeholder: 'Название чата',
+              type: 'text',
+              errorText: 'Неверное название чата',
+            },
+            btnText: 'Создать',
           },
-          btnText: 'Создать',
         },
-      },
-      this._openAddChatModal,
-      this._closeAddChatModal
+        this._openAddChatModal,
+        this._closeAddChatModal
     ).show();
   }
 
@@ -198,7 +198,7 @@ export default class ChatMenu extends Block<IBlock> {
       throw new Error('Can\'t find modal elements');
     }
 
-    if(!validationInput(input)){
+    if (!validationInput(input)) {
       throw new Error('Bad input value')
     }
 
@@ -209,6 +209,5 @@ export default class ChatMenu extends Block<IBlock> {
       return true;
     }
     console.log(addRes);
-    /** TODO: Тут надо обработать ошибки при кривых запросах */
   }
 }

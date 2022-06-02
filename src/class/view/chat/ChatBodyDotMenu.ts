@@ -1,4 +1,4 @@
-import Router from "../../Router";
+import Router from '../../Router';
 import Block from '../Block';
 import Modal from '../../Modal';
 import DropDownMenu from '../DropDownMenu';
@@ -15,7 +15,7 @@ import {validationField, validationInput} from '../../../utils/inputValidation';
 import {addUserToChat, deleteUserFromChat} from '../../../api/chats';
 import {deleteChatModel} from '../../model/ChatModel';
 
-import {CHAT_ROUTE} from "../../../constants/routes";
+import {CHAT_ROUTE} from '../../../constants/routes';
 
 import '../../../components/dotMenu/dotMenu.css';
 
@@ -207,7 +207,6 @@ export default class ChatBodyDotMenu extends Block<IBlock> {
       return true;
     }
     console.log(addRes);
-    /** TODO: Тут надо обработать ошибки при кривых запросах */
   }
 
   /** _deleteUserModal
@@ -291,7 +290,6 @@ export default class ChatBodyDotMenu extends Block<IBlock> {
       Modal.getInstance().close();
       return true;
     }
-    /** TODO: Тут надо обработать ошибки при кривых запросах */
   }
 
   /** _deleteChatModal
@@ -355,6 +353,5 @@ export default class ChatBodyDotMenu extends Block<IBlock> {
       return true;
     }
     console.log(addRes);
-    /** TODO: Тут надо обработать ошибки при кривых запросах */
   }
 }

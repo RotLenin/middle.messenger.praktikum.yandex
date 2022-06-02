@@ -207,8 +207,6 @@ export default class Auth extends DefaultController {
       Router.getInstance().redirect(CHAT_ROUTE)
       return true;
     }
-
-    /** TODO: Разобраться что тут и как :D */
     if (user === {}) {
       const user = await this.checkUser();
       if (user.status === 200) {

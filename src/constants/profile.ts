@@ -93,7 +93,7 @@ const password: ISPALink = {
   title: 'Изменить пароль',
   path: ROUTES.PROFILE_PASSWORD_ROUTE,
 };
-// TODO: Когда добавим приложению состояние - будем вызывать выход
+
 const out = {title: 'Выйти', id: 'logout'};
 const backBtn = {img: send, path: ROUTES.CHAT_ROUTE};
 

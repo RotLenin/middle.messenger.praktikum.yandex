@@ -12,7 +12,7 @@ import {prepareChat} from '../model/ChatModel';
 import {getChats} from '../../api/chats';
 import {empty, cloneDeep} from '../../utils/myLodash';
 
-import {CHAT_ROUTE} from "../../constants/routes";
+import {CHAT_ROUTE} from '../../constants/routes';
 
 export enum ChatMethods {
   CHAT = 'chat',
@@ -66,7 +66,7 @@ export default class NewChat extends DefaultController {
     const chats = await this._getChats();
 
     const selected = chats.find((el : IChat) => el.id === id);
-    if(!selected){
+    if (!selected) {
       Router.getInstance().redirect(CHAT_ROUTE);
     }
 
@@ -83,7 +83,6 @@ export default class NewChat extends DefaultController {
    * @param {IPageBlock} locals
    */
   _drowChat(locals :IPageBlock) {
-    /** TODO : хотелось бы умного обновления, но пока будем всегда перерисовывать */
     this._templateInstance = new this._template(locals)
     this.mountTemplateAsHTMLElement(this._templateInstance.render());
     this.setLastTemplate();
@@ -100,7 +99,6 @@ export default class NewChat extends DefaultController {
       selected : IChat | null = null
   ) : IChat[] {
     return chats.reduce((acc : IChat[], el : IChat) => {
-      // TODO: Константа с слешом, ломается навешивание редиректов
       el.path = '/chat' + '/' + el.id;
       el.selected = selected === null ? false : el.id === selected.id;
       acc.push(el);
@@ -113,7 +111,7 @@ export default class NewChat extends DefaultController {
    */
   async _getChats() {
     const stash = Stash.getInstance();
-    let chats = stash.getChats();
+    const chats = stash.getChats();
 
     if (chats === null || empty(chats)) {
       const res = await getChats();

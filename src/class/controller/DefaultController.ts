@@ -100,8 +100,7 @@ export default abstract class DefaultController {
         }
         resolve({errors, data, status: false})
       }
-      // @ts-ignore
-      reject('Undefined _body');
+      reject(new Error('Undefined _body'));
     });
   }
 

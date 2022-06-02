@@ -136,7 +136,6 @@ abstract class Block<Props extends Record<string, any>> {
 
   /** _render
    *  Монтируем результат render в корень
-   *  TODO: было требование заменить innerHTML
    *  для этого пришлось бы отказаться от PUG
    *  либо как то его оборачивать, на что не хватило времени =)
    */
@@ -160,7 +159,7 @@ abstract class Block<Props extends Record<string, any>> {
     return this.element;
   }
 
-    /** _makePropsProxy
+  /** _makePropsProxy
    * Создает proxy отслеживающий свойства Блока
    * @param {object} props
    * @return {Proxy}

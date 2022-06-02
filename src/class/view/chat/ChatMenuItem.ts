@@ -44,7 +44,7 @@ export default class ChatMenuItem extends Block<Record<string, any>> {
    *  @description Переопределяем
    */
   update() {
-    console.log("ChatMenuItem Update");
+    console.log('ChatMenuItem Update');
     console.log(this._root);
   }
 

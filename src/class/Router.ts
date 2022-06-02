@@ -83,7 +83,6 @@ export default class Router {
 
   /** _createRegExp
    * Создаем регулярку,
-   * TODO : в идеале доработать =)
    * @param {string} match
    * @return {string}
    */
@@ -138,7 +137,7 @@ export default class Router {
   /** getCurrentRoute
    *  @return {IRoute}
    */
-  public getCurrentRoute() : IRoute{
+  public getCurrentRoute() : IRoute {
     return this._route;
   }
 }
